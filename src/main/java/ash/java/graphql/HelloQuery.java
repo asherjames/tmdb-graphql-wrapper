@@ -1,10 +1,10 @@
 package ash.java.graphql;
 
-import java.util.Map;
+import ash.java.graphql.schema.MovieSchema;
 
 public class HelloQuery {
 
     public static Object executeHello(String query) {
-        return HelloSchema.graphQL.execute(query).getData();
+        return MovieSchema.graphQL.execute(query).getData();
     }
 }
