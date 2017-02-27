@@ -1,10 +1,10 @@
 package ash.java.graphql;
 
-import ash.java.graphql.schema.MovieSchema;
+import ash.java.graphql.schema.MovieObjectTypes;
 
 public class HelloQuery {
 
     public static Object executeHello(String query) {
-        return MovieSchema.graphQL.execute(query).getData();
+        return MovieObjectTypes.movieGraphQl.execute(query).getData();
     }
 }

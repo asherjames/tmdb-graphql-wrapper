@@ -9,7 +9,7 @@ public class HelloTest {
 
     @Test
     public void correctQueryShouldNotReturnNull() {
-        Object result = HelloQuery.executeHello("{hello}");
+        Object result = HelloQuery.executeHello("result{title}");
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(HashMap.class);
@@ -17,10 +17,10 @@ public class HelloTest {
 
     @Test
     public void correctQueryShouldReturnHashmap() {
-        Object result = HelloQuery.executeHello("{hello}");
+        Object result = HelloQuery.executeHello("{title}");
 
         HashMap<String, Object> helloMap = (HashMap)result;
 
-        assertThat(helloMap).containsOnly(entry("hello", "world"));
+        assertThat(helloMap).containsOnly(entry("title", "Pulp Fiction"));
     }
 }

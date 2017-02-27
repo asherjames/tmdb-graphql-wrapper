@@ -1,18 +1,17 @@
 package ash.java.graphql.schema;
 
 import graphql.GraphQL;
-import graphql.schema.GraphQLList;
-import graphql.schema.GraphQLObjectType;
-import graphql.schema.GraphQLSchema;
+import graphql.schema.*;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
+import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-public class MovieSchema {
+public class MovieObjectTypes {
 
-    private static GraphQLObjectType movieQueryType = newObject()
-            .name("movieQuery")
+    private static GraphQLObjectType movieObjectType = newObject()
+            .name("movie")
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("poster_path"))
@@ -27,7 +26,10 @@ public class MovieSchema {
                     .name("release_date"))
             .field(newFieldDefinition()
                     .type(new GraphQLList(GraphQLInt))
-                    .name("genre_ids"))
+                    .name("genre_ids")
+                    .argument(newArgument()
+                            .name("genres")
+                            .type(new GraphQLList(GraphQLInt))))
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("id"))
@@ -57,9 +59,16 @@ public class MovieSchema {
                     .name("vote_average"))
             .build();
 
-    private static GraphQLSchema movieSchema = GraphQLSchema.newSchema()
-            .query(movieQueryType)
+    private static GraphQLObjectType resultObjectType = newObject()
+            .name("results")
+            .field(newFieldDefinition()
+                    .type(new GraphQLList(movieObjectType))
+                    .name("results"))
             .build();
 
-    public static GraphQL graphQL = new GraphQL(movieSchema);
+    private static GraphQLSchema movieSchema = GraphQLSchema.newSchema()
+            .query(resultObjectType)
+            .build();
+
+    public static final GraphQL movieGraphQl = new GraphQL(movieSchema);
 }
