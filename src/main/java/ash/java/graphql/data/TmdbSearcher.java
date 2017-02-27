@@ -12,6 +12,8 @@ public class TmdbSearcher {
 
     private static Logger log = LoggerFactory.getLogger(TmdbSearcher.class);
 
+    public static final String GENRE_LIST_URL = "https://api.themoviedb.org/3/genre/movie/list";
+
     public static HttpResponse<JsonNode> SendRequest(String url) {
         HttpResponse<JsonNode> response = null;
         try {
