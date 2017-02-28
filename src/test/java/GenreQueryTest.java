@@ -10,7 +10,7 @@ public class GenreQueryTest {
 
     @Test
     public void correctQueryShouldNotReturnNull() {
-        Object result = GenreObjectTypes.executeGenreQuery("result{title}");
+        Object result = GenreObjectTypes.executeGenreQuery("{genres{id name}}");
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(HashMap.class);
