@@ -1,15 +1,16 @@
-import ash.java.graphql.HelloQuery;
+import ash.java.graphql.schema.GenreObjectTypes;
+import ash.java.graphql.schema.MovieObjectTypes;
 import org.junit.Test;
 
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class HelloTest {
+public class GenreQueryTest {
 
     @Test
     public void correctQueryShouldNotReturnNull() {
-        Object result = HelloQuery.executeHello("result{title}");
+        Object result = GenreObjectTypes.executeGenreQuery("result{title}");
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(HashMap.class);
@@ -17,7 +18,7 @@ public class HelloTest {
 
     @Test
     public void correctQueryShouldReturnHashmap() {
-        Object result = HelloQuery.executeHello("{title}");
+        Object result = GenreObjectTypes.executeGenreQuery("{title}");
 
         HashMap<String, Object> helloMap = (HashMap)result;
 

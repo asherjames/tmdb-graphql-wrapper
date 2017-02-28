@@ -70,5 +70,9 @@ public class MovieObjectTypes {
             .query(resultObjectType)
             .build();
 
-    public static final GraphQL movieGraphQl = new GraphQL(movieSchema);
+    private static final GraphQL movieGraphQl = new GraphQL(movieSchema);
+
+    public static Object executeMovieQuery(String query) {
+        return movieGraphQl.execute(query).getData();
+    }
 }

@@ -9,7 +9,6 @@ import graphql.schema.*;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
-import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLObjectType.newObject;
 
 public class GenreObjectTypes {
@@ -18,11 +17,7 @@ public class GenreObjectTypes {
             .name("genre")
             .field(newFieldDefinition()
                     .type(GraphQLInt)
-                    .name("id")
-                    .dataFetcher(env -> {
-                        HttpResponse<JsonNode> response = SendRequest(GENRE_LIST_URL);
-                        return response.getBody().getObject().get("id");
-                    }))
+                    .name("id"))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("name"))
@@ -31,13 +26,21 @@ public class GenreObjectTypes {
     private static GraphQLObjectType genreListObjectType = newObject()
             .name("genre_list")
             .field(newFieldDefinition()
-                    .type(new GraphQLList(genreObjectType)))
-            .name("genres")
+                    .type(new GraphQLList(genreObjectType))
+                    .name("genres")
+                    .dataFetcher(env -> {
+                        HttpResponse<JsonNode> response = SendRequest(GENRE_LIST_URL);
+                        return response.getBody().getObject().get("genres");
+                    }))
             .build();
 
     private static GraphQLSchema genreSchema = GraphQLSchema.newSchema()
             .query(genreListObjectType)
             .build();
 
-    public static final GraphQL genreGraphQl = new GraphQL(genreSchema);
+    private static final GraphQL genreGraphQl = new GraphQL(genreSchema);
+
+    public static Object executeGenreQuery(String query) {
+        return genreGraphQl.execute(query).getData();
+    }
 }
