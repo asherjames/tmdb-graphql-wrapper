@@ -1,24 +1,36 @@
 import ash.java.graphql.schema.GenreObjectTypes;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class GenreQueryTest {
 
-    @Test
-    public void correctQueryShouldNotReturnNull() {
-        Map<String, Object> result = GenreObjectTypes.executeGenreQuery("{genres{id name}}");
+    private static Object resultObject;
+    private static JsonObject resultJson;
 
-        assertThat(result).isNotNull();
-        assertThat(result).isInstanceOf(Map.class);
+    @BeforeClass
+    public static void setupResults() {
+        resultObject = GenreObjectTypes.executeGenreQuery("{genres{id name}}");
+        resultJson = new Gson().toJsonTree(resultObject).getAsJsonObject();
     }
 
     @Test
-    public void correctQueryShouldReturnHashmap() {
-        Map<String, Object> result = GenreObjectTypes.executeGenreQuery("{genres{id name}}");
+    public void correctQueryShouldNotReturnNull() {
+        assertThat(resultObject).isNotNull();
+    }
 
-//        assertThat(result).containsOnly(entry("title", "Pulp Fiction"));
+    @Test
+    public void correctQueryShouldReturnCorrectNumberOfGenres() {
+        assertThat(resultJson.get("genres").getAsJsonArray().size()).isEqualTo(19);
+    }
+
+    @Test
+    public void correctQueryShouldReturnListWithCorrectValues() {
+        assertThat(resultJson.get("genres").getAsJsonArray().get(0).getAsJsonObject().get("id"))
+                .isEqualTo(new JsonPrimitive(28));
     }
 }

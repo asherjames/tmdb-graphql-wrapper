@@ -10,7 +10,7 @@ public class TmdbSearcherTest {
 
     @Test
     public void tmdbSearcherCanRequestGenres() {
-        HttpResponse<JsonNode> response = TmdbSearcher.SendRequest(GENRE_LIST_URL);
+        HttpResponse<JsonNode> response = TmdbSearcher.sendRequest(GENRE_LIST_URL);
 
         assertThat(response.getStatus()).isEqualTo(200);
     }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Map;
 
 @Component
 @Path("/")
@@ -23,7 +22,7 @@ public class Endpoints {
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postEndpoint(String query) {
-        Map<String, Object> result = GenreObjectTypes.executeGenreQuery(query);
+        Object result = GenreObjectTypes.executeGenreQuery(query);
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();
