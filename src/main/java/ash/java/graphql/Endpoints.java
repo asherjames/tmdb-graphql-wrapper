@@ -1,6 +1,7 @@
 package ash.java.graphql;
 
 import ash.java.graphql.schema.GenreObjectTypes;
+import ash.java.graphql.schema.KeywordObjectTypes;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +20,22 @@ public class Endpoints {
     }
 
     @POST
+    @Path("/genres")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postEndpoint(String query) {
+    public Response genresEndpoint(String query) {
         Object result = GenreObjectTypes.executeGenreQuery(query);
+        String response = new Gson().toJson(result);
+
+        return Response.ok(response).build();
+    }
+
+    @POST
+    @Path("/keywords")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response keywordsEndpoint(String query) {
+        Object result = KeywordObjectTypes.executeKeywordQuery(query);
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();

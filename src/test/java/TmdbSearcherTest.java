@@ -3,7 +3,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import org.junit.Test;
 
-import static ash.java.graphql.data.TmdbSearcher.*;
+import static ash.java.graphql.data.TmdbSearcher.TmdbUrl.*;
 import static org.assertj.core.api.Assertions.*;
 
 public class TmdbSearcherTest {

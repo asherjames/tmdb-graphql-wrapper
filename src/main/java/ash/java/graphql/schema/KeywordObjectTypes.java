@@ -5,13 +5,14 @@ import graphql.schema.*;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
-import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLObjectType.newObject;
 
 public class KeywordObjectTypes {
 
+    private KeywordObjectTypes(){}
+
     private static GraphQLObjectType keywordObjectType = newObject()
-            .name("movie")
+            .name("keyword")
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("id"))
@@ -34,9 +35,9 @@ public class KeywordObjectTypes {
             .query(keywordResultObjectType)
             .build();
 
-    private static final GraphQL movieGraphQl = new GraphQL(keywordSchema);
+    private static final GraphQL keywordGraphQl = new GraphQL(keywordSchema);
 
-    public static Object executeMovieQuery(String query) {
-        return movieGraphQl.execute(query).getData();
+    public static Object executeKeywordQuery(String query) {
+        return keywordGraphQl.execute(query).getData();
     }
 }

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static ash.java.graphql.data.TmdbSearcher.TmdbUrl.*;
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
@@ -17,6 +18,8 @@ import static ash.java.graphql.data.TmdbSearcher.*;
 public class GenreObjectTypes {
 
     private static Logger log = LoggerFactory.getLogger(GenreObjectTypes.class);
+
+    private GenreObjectTypes(){}
 
     private static GraphQLObjectType genreObjectType = newObject()
             .name("genre")
