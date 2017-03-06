@@ -54,7 +54,7 @@ public class GenreObjectTypes {
     private static final GraphQL genreGraphQl = new GraphQL(genreSchema);
 
     public static Object executeGenreQuery(String query) {
-        log.info("Executing query: " + query);
+        log.info("Executing query: %s", query);
         return genreGraphQl.execute(query).getData();
     }
 }
