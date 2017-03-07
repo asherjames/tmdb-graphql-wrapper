@@ -14,7 +14,7 @@ public class TmdbSearcher {
 
     private static final String API_KEY = getKey();
 
-    public TmdbSearcher(){}
+    private TmdbSearcher(){}
 
     public enum TmdbUrl {
         GENRE_LIST_URL("https://api.themoviedb.org/3/genre/movie/list");

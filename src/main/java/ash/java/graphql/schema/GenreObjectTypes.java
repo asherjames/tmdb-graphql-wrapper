@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ash.java.graphql.data.TmdbSearcher.TmdbUrl.*;
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
@@ -45,7 +44,7 @@ public class GenreObjectTypes {
                     .type(new GraphQLList(genreObjectType))
                     .name("genres")
                     .dataFetcher(env -> {
-                        HttpResponse<JsonNode> response = sendRequest(GENRE_LIST_URL);
+                        HttpResponse<JsonNode> response = sendRequest(TmdbUrl.GENRE_LIST_URL);
                         return response.getBody().getObject().get("genres");
                     }))
             .build();

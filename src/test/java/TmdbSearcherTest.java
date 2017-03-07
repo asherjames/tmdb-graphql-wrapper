@@ -4,6 +4,7 @@ import com.mashape.unirest.http.JsonNode;
 import org.junit.Test;
 
 import static ash.java.graphql.data.TmdbSearcher.TmdbUrl.*;
+import static ash.java.graphql.data.TmdbSearcher.TmdbArgUrl.*;
 import static org.assertj.core.api.Assertions.*;
 
 public class TmdbSearcherTest {
@@ -11,6 +12,13 @@ public class TmdbSearcherTest {
     @Test
     public void tmdbSearcherCanRequestGenres() {
         HttpResponse<JsonNode> response = TmdbSearcher.sendRequest(GENRE_LIST_URL);
+
+        assertThat(response.getStatus()).isEqualTo(200);
+    }
+
+    @Test
+    public void tmdbSeacherCanRequestKeywords() {
+        HttpResponse<JsonNode> response = TmdbSearcher.sendRequest(MOVIE_KEYWORDS_URL, "123");
 
         assertThat(response.getStatus()).isEqualTo(200);
     }
