@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import graphql.GraphQL;
 import graphql.schema.*;
+import org.json.JSONObject;
 
 import static ash.java.graphql.data.TmdbSearcher.*;
 import static graphql.Scalars.*;
@@ -19,10 +20,18 @@ public class KeywordObjectTypes {
             .name("keyword")
             .field(newFieldDefinition()
                     .type(GraphQLInt)
-                    .name("id"))
+                    .name("id")
+                    .dataFetcher(env -> {
+                        JSONObject object = (JSONObject) env.getSource();
+                        return object.get("id");
+                    }))
             .field(newFieldDefinition()
                     .type(GraphQLString)
-                    .name("name"))
+                    .name("name")
+                    .dataFetcher(env -> {
+                        JSONObject object = (JSONObject) env.getSource();
+                        return object.get("name");
+                    }))
             .build();
 
     private static GraphQLObjectType keywordResultObjectType = newObject()
@@ -34,7 +43,7 @@ public class KeywordObjectTypes {
                             .type(GraphQLString))
                     .dataFetcher(env -> {
                         HttpResponse<JsonNode> response = sendRequest(TmdbArgUrl.MOVIE_KEYWORDS_URL, env.getArgument("filmId"));
-                        return response.getBody();
+                        return response.getBody().getObject().get("keywords");
                     }))
             .build();
 
