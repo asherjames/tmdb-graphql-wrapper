@@ -43,7 +43,7 @@ public class KeywordObjectTypes {
                             .type(GraphQLString))
                     .dataFetcher(env -> {
                         HttpResponse<JsonNode> response = sendRequest(TmdbArgUrl.MOVIE_KEYWORDS_URL, env.getArgument("filmId"));
-                        return response.getBody().getObject().get("keywords");
+                        return response.getBody().getObject().getJSONArray("keywords");
                     }))
             .build();
 
