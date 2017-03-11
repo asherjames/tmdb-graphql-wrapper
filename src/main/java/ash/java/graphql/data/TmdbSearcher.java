@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import static ash.java.graphql.ApiKey.getKey;
+import static ash.java.graphql.ApiKeyManager.getKey;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;

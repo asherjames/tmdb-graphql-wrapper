@@ -6,22 +6,24 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ApiKey {
-    private static ApiKey ourInstance = new ApiKey();
+public class ApiKeyManager {
+    private static ApiKeyManager ourInstance = new ApiKeyManager();
     private static String apiKeyString;
-    private Logger log = LoggerFactory.getLogger(ApiKey.class);
+    private Logger log = LoggerFactory.getLogger(ApiKeyManager.class);
     private Properties props = new Properties();
 
-    private ApiKey() {
+    private ApiKeyManager() {
         try {
+            log.info("Attempting to load API key from properties file...");
+
             props.load(this.getClass().getClassLoader().getResourceAsStream("apiKey.properties"));
-            apiKeyString = props.getProperty("apiKey");
+            apiKeyString = props.getProperty("apikey");
         } catch (IOException e) {
             log.error("Could not load properties file!  Attempting to load from environment variable...", e);
 
             apiKeyString = System.getenv("TMDB_API_KEY");
 
-            if(apiKeyString.isEmpty()) {
+            if(apiKeyString == null) {
                 throw new TmdbGqlException("Could not load API key from environment variable!");
             }
         }
