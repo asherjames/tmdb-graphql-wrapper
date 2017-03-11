@@ -1,5 +1,6 @@
 package ash.java.graphql;
 
+import ash.java.graphql.api.Endpoints;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 

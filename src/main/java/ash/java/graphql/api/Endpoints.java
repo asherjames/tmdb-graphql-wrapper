@@ -1,4 +1,4 @@
-package ash.java.graphql;
+package ash.java.graphql.api;
 
 import ash.java.graphql.schema.GenreObjectTypes;
 import ash.java.graphql.schema.KeywordObjectTypes;
