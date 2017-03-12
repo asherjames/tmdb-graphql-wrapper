@@ -19,23 +19,21 @@ public class Endpoints {
         return Response.ok("GET endpoint").build();
     }
 
-    @POST
+    @GET
     @Path("/genres")
-    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response genresEndpoint(String query) {
-        Object result = GenreObjectTypes.executeGenreQuery(query);
+    public Response genresEndpoint(@QueryParam("query") String query) {
+        DataObject result = new DataObject(GenreObjectTypes.executeGenreQuery(query));
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();
     }
 
-    @POST
+    @GET
     @Path("/keywords")
-    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response keywordsEndpoint(String query) {
-        Object result = KeywordObjectTypes.executeKeywordQuery(query);
+    public Response keywordsEndpoint(@QueryParam("query") String query) {
+        DataObject result = new DataObject(KeywordObjectTypes.executeKeywordQuery(query));
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();

@@ -1,4 +1,4 @@
-# TMDb GraphQL wrapper
+# TMDb GraphQL wrapper [![Build Status](https://travis-ci.org/asherjames/tmdb-graphql-wrapper.svg?branch=master)](https://travis-ci.org/asherjames/tmdb-graphql-wrapper)
 Basic experimentation project looking at how to wrap a RESTful API with a GraphQL proxy.
   
 So far interprets simple genre and keyword requests:
