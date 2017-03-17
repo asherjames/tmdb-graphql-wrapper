@@ -33,9 +33,9 @@ Result -
 
 Endpoint - `/keywords`
 
-Query - `{keywordList(filmId: "123") {name}`
+Query - `{keywordList(filmId: "123") {name}}`
 
-URL (percent encoded) - `http://localhost:8080/keywords?query=%7BkeywordList%28filmId%3A%22123%22%29%7Bname%7D`
+URL (percent encoded) - `http://localhost:8080/keywords?query=%7BkeywordList%28filmId%3A%22123%22%29%7Bname%7D%7D`
 
 Result - 
 ```json
@@ -57,14 +57,14 @@ Result -
 }
 ```
 
-###Api key
+### Api key
 Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`, or set a `TMDB_API_KEY` environment variable
 
-###Build
+### Build
 
 `./gradlew build`
 
 
-###Test
+### Test
 
 `./gradlew test`

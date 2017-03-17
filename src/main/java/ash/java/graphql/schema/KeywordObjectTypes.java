@@ -5,6 +5,8 @@ import com.mashape.unirest.http.JsonNode;
 import graphql.GraphQL;
 import graphql.schema.*;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static ash.java.graphql.data.TmdbSearcher.*;
 import static graphql.Scalars.*;
@@ -12,6 +14,8 @@ import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
 public class KeywordObjectTypes {
+
+    private static Logger log = LoggerFactory.getLogger(KeywordObjectTypes.class);
 
     private KeywordObjectTypes() {
     }
@@ -54,6 +58,7 @@ public class KeywordObjectTypes {
     private static final GraphQL keywordGraphQl = new GraphQL(keywordSchema);
 
     public static Object executeKeywordQuery(String query) {
+        log.info("Executing query: {}", query);
         return keywordGraphQl.execute(query).getData();
     }
 }
