@@ -1,7 +1,7 @@
 package ash.java.graphql.api;
 
-import ash.java.graphql.schema.GenreObjectTypes;
-import ash.java.graphql.schema.KeywordObjectTypes;
+import ash.java.graphql.schema.GenreSchema;
+import ash.java.graphql.schema.KeywordSchema;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class Endpoints {
     @Path("/genres")
     @Produces(MediaType.APPLICATION_JSON)
     public Response genresEndpoint(@QueryParam("query") String query) {
-        DataObject result = new DataObject(GenreObjectTypes.executeGenreQuery(query));
+        DataObject result = new DataObject(GenreSchema.executeGenreQuery(query));
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();
@@ -33,7 +33,7 @@ public class Endpoints {
     @Path("/keywords")
     @Produces(MediaType.APPLICATION_JSON)
     public Response keywordsEndpoint(@QueryParam("query") String query) {
-        DataObject result = new DataObject(KeywordObjectTypes.executeKeywordQuery(query));
+        DataObject result = new DataObject(KeywordSchema.executeKeywordQuery(query));
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();

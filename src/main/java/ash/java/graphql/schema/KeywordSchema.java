@@ -8,20 +8,19 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static ash.java.graphql.data.TmdbSearcher.*;
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-import static ash.java.graphql.data.TmdbSearcher.*;
+public class KeywordSchema {
 
-public class GenreObjectTypes {
+    private static Logger log = LoggerFactory.getLogger(KeywordSchema.class);
 
-    private static Logger log = LoggerFactory.getLogger(GenreObjectTypes.class);
+    private KeywordSchema() {}
 
-    private GenreObjectTypes(){}
-
-    private static GraphQLObjectType genreObjectType = newObject()
-            .name("genre")
+    private static GraphQLObjectType keywordObjectType = newObject()
+            .name("keyword")
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("id")
@@ -38,25 +37,27 @@ public class GenreObjectTypes {
                     }))
             .build();
 
-    private static GraphQLObjectType genreListObjectType = newObject()
-            .name("genre_list")
+    private static GraphQLObjectType keywordResultObjectType = newObject()
+            .name("results")
             .field(newFieldDefinition()
-                    .type(new GraphQLList(genreObjectType))
-                    .name("genres")
+                    .type(new GraphQLList(keywordObjectType))
+                    .name("keywordList")
+                    .argument(arg -> arg.name("filmId")
+                            .type(GraphQLString))
                     .dataFetcher(env -> {
-                        HttpResponse<JsonNode> response = sendRequest(TmdbUrl.GENRE_LIST_URL);
-                        return response.getBody().getObject().get("genres");
+                        HttpResponse<JsonNode> response = sendRequest(TmdbArgUrl.MOVIE_KEYWORDS_URL, env.getArgument("filmId"));
+                        return response.getBody().getObject().getJSONArray("keywords");
                     }))
             .build();
 
-    private static GraphQLSchema genreSchema = GraphQLSchema.newSchema()
-            .query(genreListObjectType)
+    private static GraphQLSchema keywordSchema = GraphQLSchema.newSchema()
+            .query(keywordResultObjectType)
             .build();
 
-    private static final GraphQL genreGraphQl = new GraphQL(genreSchema);
+    private static final GraphQL keywordGraphQl = new GraphQL(keywordSchema);
 
-    public static Object executeGenreQuery(String query) {
+    public static Object executeKeywordQuery(String query) {
         log.info("Executing query: {}", query);
-        return genreGraphQl.execute(query).getData();
+        return keywordGraphQl.execute(query).getData();
     }
 }

@@ -1,4 +1,4 @@
-import ash.java.graphql.schema.GenreObjectTypes;
+import ash.java.graphql.schema.GenreSchema;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -20,13 +20,13 @@ public class GenreQueryTest {
     public static void setupResults() {
         Gson gson = new Gson();
 
-        resultObjectIdName = GenreObjectTypes.executeGenreQuery("{genres{id name}}");
+        resultObjectIdName = GenreSchema.executeGenreQuery("{genres{id name}}");
         resultJsonIdName = gson.toJsonTree(resultObjectIdName).getAsJsonObject();
 
-        resultObjectId = GenreObjectTypes.executeGenreQuery("{genres{id}}");
+        resultObjectId = GenreSchema.executeGenreQuery("{genres{id}}");
         resultJsonId = gson.toJsonTree(resultObjectId).getAsJsonObject();
 
-        resultObjectName = GenreObjectTypes.executeGenreQuery("{genres{name}}");
+        resultObjectName = GenreSchema.executeGenreQuery("{genres{name}}");
         resultJsonName = gson.toJsonTree(resultObjectName).getAsJsonObject();
     }
 
