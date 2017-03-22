@@ -24,7 +24,7 @@ public class Endpoints {
     @Path("/graphql")
     @Produces(MediaType.APPLICATION_JSON)
     public Response graphqlEndpoint(@QueryParam("query") String query) {
-        DataObject result = new DataObject(TmdbSchema.executeQuery(query));
+        Object result = TmdbSchema.executeQuery(query);
         String response = new Gson().toJson(result);
 
         return Response.ok(response).build();

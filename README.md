@@ -3,11 +3,9 @@ Basic experimentation project looking at how to wrap a RESTful API with a GraphQ
   
 So far interprets simple genre and keyword requests:
 
-Endpoint - `/genres`
-
 Query - `{genres{name}}`
 
-URL (percent encoded) = `http://localhost:8080/genres?query=%7Bgenres%7Bname%7D%7D`
+URL (percent encoded) = `http://localhost:8080/graphql?query=%7Bgenres%7Bname%7D%7D`
 
 Result - 
 ```json
@@ -31,11 +29,10 @@ Result -
 ```
 
 
-Endpoint - `/keywords`
 
 Query - `{keywordList(filmId: "123") {name}}`
 
-URL (percent encoded) - `http://localhost:8080/keywords?query=%7BkeywordList%28filmId%3A%22123%22%29%7Bname%7D%7D`
+URL (percent encoded) - `http://localhost:8080/graphql?query=%7BkeywordList%28filmId%3A%22123%22%29%7Bname%7D%7D`
 
 Result - 
 ```json
