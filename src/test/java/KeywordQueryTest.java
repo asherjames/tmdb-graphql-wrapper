@@ -18,16 +18,14 @@ public class KeywordQueryTest {
 
     @BeforeClass
     public static void setupResults() {
-        Gson gson = new Gson();
-
         resultObject = TmdbSchema.executeQuery("{keywordList(filmId: \"123\"){id name}}");
-        resultJson = gson.toJsonTree(resultObject).getAsJsonObject();
+        resultJson = TestUtil.extractData(resultObject);
 
         resultIdObject = TmdbSchema.executeQuery("{keywordList(filmId: \"123\"){id}}");
-        resultIdJson = gson.toJsonTree(resultIdObject).getAsJsonObject();
+        resultIdJson = TestUtil.extractData(resultIdObject);
 
         resultNameObject = TmdbSchema.executeQuery("{keywordList(filmId: \"123\"){name}}");
-        resultNameJson = gson.toJsonTree(resultNameObject).getAsJsonObject();
+        resultNameJson = TestUtil.extractData(resultNameObject);
     }
 
     @Test

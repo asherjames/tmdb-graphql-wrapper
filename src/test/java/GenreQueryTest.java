@@ -19,16 +19,14 @@ public class GenreQueryTest {
 
     @BeforeClass
     public static void setupResults() {
-        Gson gson = new Gson();
-
         resultObjectIdName = TmdbSchema.executeQuery("{genres{id name}}");
-        resultJsonIdName = gson.toJsonTree(resultObjectIdName).getAsJsonObject();
+        resultJsonIdName = TestUtil.extractData(resultObjectIdName);
 
         resultObjectId = TmdbSchema.executeQuery("{genres{id}}");
-        resultJsonId = gson.toJsonTree(resultObjectId).getAsJsonObject();
+        resultJsonId = TestUtil.extractData(resultObjectId);
 
         resultObjectName = TmdbSchema.executeQuery("{genres{name}}");
-        resultJsonName = gson.toJsonTree(resultObjectName).getAsJsonObject();
+        resultJsonName = TestUtil.extractData(resultObjectName);
     }
 
     @Test
