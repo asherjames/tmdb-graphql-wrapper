@@ -16,9 +16,8 @@ import static ash.java.graphql.data.TmdbSearcher.*;
 
 public class GenreSchema {
 
-    private static Logger log = LoggerFactory.getLogger(GenreSchema.class);
-
-    private GenreSchema(){}
+    private GenreSchema() {
+    }
 
     private static GraphQLObjectType genreObjectType = newObject()
             .name("genre")
@@ -38,25 +37,15 @@ public class GenreSchema {
                     }))
             .build();
 
-    private static GraphQLObjectType genreListObjectType = newObject()
-            .name("genre_list")
-            .field(newFieldDefinition()
-                    .type(new GraphQLList(genreObjectType))
-                    .name("genres")
-                    .dataFetcher(env -> {
-                        HttpResponse<JsonNode> response = sendRequest(TmdbUrl.GENRE_LIST_URL);
-                        return response.getBody().getObject().get("genres");
-                    }))
-            .build();
+    private static GraphQLFieldDefinition genreListFieldDefinition = newFieldDefinition()
+            .type(new GraphQLList(genreObjectType))
+            .name("genres")
+            .dataFetcher(env -> {
+                HttpResponse<JsonNode> response = sendRequest(TmdbUrl.GENRE_LIST_URL);
+                return response.getBody().getObject().get("genres");
+            }).build();
 
-    private static GraphQLSchema genreSchema = GraphQLSchema.newSchema()
-            .query(genreListObjectType)
-            .build();
-
-    private static final GraphQL genreGraphQl = new GraphQL(genreSchema);
-
-    public static Object executeGenreQuery(String query) {
-        log.info("Executing query: {}", query);
-        return genreGraphQl.execute(query).getData();
+    public static GraphQLFieldDefinition getGenreListFieldDefinition() {
+        return genreListFieldDefinition;
     }
 }

@@ -1,4 +1,4 @@
-import ash.java.graphql.schema.KeywordSchema;
+import ash.java.graphql.TmdbSchema;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -20,13 +20,13 @@ public class KeywordQueryTest {
     public static void setupResults() {
         Gson gson = new Gson();
 
-        resultObject = KeywordSchema.executeKeywordQuery("{keywordList(filmId: \"123\"){id name}}");
+        resultObject = TmdbSchema.executeQuery("{keywordList(filmId: \"123\"){id name}}");
         resultJson = gson.toJsonTree(resultObject).getAsJsonObject();
 
-        resultIdObject = KeywordSchema.executeKeywordQuery("{keywordList(filmId: \"123\"){id}}");
+        resultIdObject = TmdbSchema.executeQuery("{keywordList(filmId: \"123\"){id}}");
         resultIdJson = gson.toJsonTree(resultIdObject).getAsJsonObject();
 
-        resultNameObject = KeywordSchema.executeKeywordQuery("{keywordList(filmId: \"123\"){name}}");
+        resultNameObject = TmdbSchema.executeQuery("{keywordList(filmId: \"123\"){name}}");
         resultNameJson = gson.toJsonTree(resultNameObject).getAsJsonObject();
     }
 
