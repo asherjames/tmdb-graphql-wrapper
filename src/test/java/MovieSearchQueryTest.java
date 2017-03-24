@@ -14,7 +14,7 @@ public class MovieSearchQueryTest {
     public static void setupResults() {
         Gson gson = new Gson();
 
-        resultObject = TmdbSchema.executeQuery("{movieSearch(query: \"Alien\"){name}}");
+        resultObject = TmdbSchema.executeQuery("{movieSearch(query: \"Alien\"){poster_path}}");
     }
 
     @Test

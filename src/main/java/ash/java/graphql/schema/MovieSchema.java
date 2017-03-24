@@ -2,9 +2,8 @@ package ash.java.graphql.schema;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
-import graphql.schema.GraphQLFieldDefinition;
-import graphql.schema.GraphQLList;
-import graphql.schema.GraphQLObjectType;
+import graphql.schema.*;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -17,64 +16,69 @@ public class MovieSchema {
     private MovieSchema() {
     }
 
+    private static DataFetcher movieSchemaDataFetcher = (DataFetchingEnvironment env) -> {
+        JSONObject object = (JSONObject) env.getSource();
+        return object.get(env.getFields().get(0).getName());
+    };
+
     private static GraphQLObjectType movieObjectType = newObject()
             .name("movie")
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("poster_path")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLBoolean)
                     .name("adult")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("overview")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("release_date")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(new GraphQLList(GraphQLInt))
                     .name("genres_ids")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("id")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("original_title")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("original_language")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("title")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("backdrop_path")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLLong)
                     .name("popularity")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("vote_count")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLBoolean)
                     .name("video")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .field(newFieldDefinition()
                     .type(GraphQLLong)
                     .name("vote_average")
-                    .dataFetcher(env -> null))
+                    .dataFetcher(movieSchemaDataFetcher))
             .build();
 
     private static GraphQLFieldDefinition movieSearchFieldDefinition = newFieldDefinition()
