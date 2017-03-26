@@ -1,4 +1,5 @@
 import ash.java.graphql.TmdbSchema;
+import ash.java.graphql.data.TmdbSearcher;
 import ash.java.graphql.schema.MovieSchema;
 import com.google.gson.Gson;
 import org.junit.BeforeClass;
@@ -12,9 +13,9 @@ public class MovieSearchQueryTest {
 
     @BeforeClass
     public static void setupResults() {
-        Gson gson = new Gson();
+        TmdbSchema schema = new TmdbSchema(new TmdbSearcher());
 
-        resultObject = TmdbSchema.executeQuery("{movieSearch(query: \"Alien\"){poster_path}}");
+        resultObject = schema.executeQuery("{movieSearch(query: \"Alien\"){poster_path}}");
     }
 
     @Test

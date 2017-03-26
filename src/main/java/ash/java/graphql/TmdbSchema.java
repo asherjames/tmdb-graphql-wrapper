@@ -1,30 +1,36 @@
 package ash.java.graphql;
 
+import ash.java.graphql.data.TmdbSearcher;
 import ash.java.graphql.schema.GenreSchema;
 import ash.java.graphql.schema.KeywordSchema;
 import ash.java.graphql.schema.MovieSchema;
 import graphql.GraphQL;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static graphql.schema.GraphQLObjectType.newObject;
 
+@Service
 public class TmdbSchema {
 
-    private static TmdbSchema ourInstance = new TmdbSchema();
-
     private GraphQL graphQL;
+    private static Logger Log = LoggerFactory.getLogger(TmdbSchema.class);
 
-    public static Object executeQuery(String query) {
-        return ourInstance.graphQL.execute(query);
-    }
+    @Autowired
+    public TmdbSchema(TmdbSearcher searcher) {
+        MovieSchema movieSchema = new MovieSchema(searcher);
+        KeywordSchema keywordSchema = new KeywordSchema(searcher);
+        GenreSchema genreSchema = new GenreSchema(searcher);
 
-    private TmdbSchema() {
         GraphQLObjectType queryType = newObject()
                 .name("QueryType")
-                .field(MovieSchema.getMovieSearchFieldDefinition())
-                .field(KeywordSchema.getKeywordResultFieldType())
-                .field(GenreSchema.getGenreListFieldDefinition())
+                .field(movieSchema.getFieldDefinition())
+                .field(keywordSchema.getFieldDefinition())
+                .field(genreSchema.getFieldDefinition())
                 .build();
 
         GraphQLSchema tmdbSchema = GraphQLSchema.newSchema()
@@ -32,5 +38,10 @@ public class TmdbSchema {
                 .build();
 
         graphQL = new GraphQL(tmdbSchema);
+    }
+
+    public Object executeQuery(String query) {
+        Log.info("Executing query: {}", query);
+        return graphQL.execute(query);
     }
 }

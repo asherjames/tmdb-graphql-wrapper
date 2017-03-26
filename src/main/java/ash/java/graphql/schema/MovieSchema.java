@@ -1,5 +1,7 @@
 package ash.java.graphql.schema;
 
+import ash.java.graphql.data.TmdbSearcher;
+import ash.java.graphql.data.TmdbUrls;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import graphql.schema.*;
@@ -7,21 +9,22 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import static ash.java.graphql.data.TmdbSearcher.*;
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-public class MovieSchema {
-    private MovieSchema() {
+public class MovieSchema extends AbstractSchema {
+
+    public MovieSchema(final TmdbSearcher searcher) {
+        super(searcher);
     }
 
-    private static DataFetcher movieSchemaDataFetcher = (DataFetchingEnvironment env) -> {
+    private DataFetcher movieSchemaDataFetcher = (DataFetchingEnvironment env) -> {
         JSONObject object = (JSONObject) env.getSource();
         return object.get(env.getFields().get(0).getName());
     };
 
-    private static GraphQLObjectType movieObjectType = newObject()
+    private GraphQLObjectType movieObjectType = newObject()
             .name("movie")
             .field(newFieldDefinition()
                     .type(GraphQLString)
@@ -81,7 +84,7 @@ public class MovieSchema {
                     .dataFetcher(movieSchemaDataFetcher))
             .build();
 
-    private static GraphQLFieldDefinition movieSearchFieldDefinition = newFieldDefinition()
+    private GraphQLFieldDefinition movieSearchFieldDefinition = newFieldDefinition()
             .type(new GraphQLList(movieObjectType))
             .name("movieSearch")
             .argument(arg -> arg.name("query")
@@ -89,11 +92,11 @@ public class MovieSchema {
             .dataFetcher(env -> {
                 HashMap<String, Object> queryParams = new HashMap<>();
                 queryParams.put("query", env.getArgument("query"));
-                HttpResponse<JsonNode> response = sendRequest(TmdbQueryUrl.MOVIE_SEARCH_URL, queryParams);
+                HttpResponse<JsonNode> response = searcher.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, queryParams);
                 return response.getBody().getObject().getJSONArray("results");
             }).build();
 
-    public static GraphQLFieldDefinition getMovieSearchFieldDefinition() {
+    public GraphQLFieldDefinition getFieldDefinition() {
         return movieSearchFieldDefinition;
     }
 }
