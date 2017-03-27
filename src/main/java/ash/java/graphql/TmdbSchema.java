@@ -1,9 +1,9 @@
 package ash.java.graphql;
 
 import ash.java.graphql.data.TmdbSearcher;
-import ash.java.graphql.schema.GenreSchema;
-import ash.java.graphql.schema.KeywordSchema;
-import ash.java.graphql.schema.MovieSchema;
+import ash.java.graphql.schemas.GenreSchema;
+import ash.java.graphql.schemas.KeywordSchema;
+import ash.java.graphql.schemas.MovieSchema;
 import graphql.GraphQL;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;

@@ -1,4 +1,4 @@
-package ash.java.graphql.schema;
+package ash.java.graphql.schemas;
 
 import ash.java.graphql.data.TmdbSearcher;
 import com.mashape.unirest.http.HttpResponse;
@@ -12,14 +12,14 @@ import static graphql.schema.GraphQLObjectType.newObject;
 
 import static ash.java.graphql.data.TmdbUrls.*;
 
-public class GenreSchema extends AbstractSchema {
+public class KeywordSchema extends AbstractSchema {
 
-    public GenreSchema(final TmdbSearcher searcher) {
+    public KeywordSchema(TmdbSearcher searcher) {
         super(searcher);
     }
 
-    private GraphQLObjectType genreObjectType = newObject()
-            .name("genre")
+    private GraphQLObjectType keywordObjectType = newObject()
+            .name("keyword")
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("id")
@@ -36,15 +36,17 @@ public class GenreSchema extends AbstractSchema {
                     }))
             .build();
 
-    private GraphQLFieldDefinition genreListFieldDefinition = newFieldDefinition()
-            .type(new GraphQLList(genreObjectType))
-            .name("genres")
+    private GraphQLFieldDefinition keywordResultFieldType = newFieldDefinition()
+            .type(new GraphQLList(keywordObjectType))
+            .name("keywordList")
+            .argument(arg -> arg.name("filmId")
+                    .type(GraphQLString))
             .dataFetcher(env -> {
-                HttpResponse<JsonNode> response = searcher.sendRequest(TmdbUrl.GENRE_LIST_URL);
-                return response.getBody().getObject().get("genres");
+                HttpResponse<JsonNode> response = searcher.sendRequest(TmdbArgUrl.MOVIE_KEYWORDS_URL, env.getArgument("filmId"));
+                return response.getBody().getObject().getJSONArray("keywords");
             }).build();
 
     public GraphQLFieldDefinition getFieldDefinition() {
-        return genreListFieldDefinition;
+        return keywordResultFieldType;
     }
 }

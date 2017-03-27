@@ -1,4 +1,4 @@
-package ash.java.graphql.schema;
+package ash.java.graphql.schemas;
 
 import ash.java.graphql.data.TmdbSearcher;
 import ash.java.graphql.data.TmdbUrls;

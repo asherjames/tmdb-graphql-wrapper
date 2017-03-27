@@ -1,18 +1,11 @@
 import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.TmdbSearcher;
-import ash.java.graphql.data.TmdbUrls;
-import ash.java.graphql.schema.GenreSchema;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class GenreQueryTest {
 

@@ -1,7 +1,5 @@
 import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.TmdbSearcher;
-import ash.java.graphql.schema.MovieSchema;
-import com.google.gson.Gson;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
