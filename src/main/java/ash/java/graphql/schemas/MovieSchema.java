@@ -1,22 +1,23 @@
 package ash.java.graphql.schemas;
 
-import ash.java.graphql.data.TmdbSearcher;
-import ash.java.graphql.data.TmdbUrls;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
+import ash.java.graphql.data.SearchDao;
 import graphql.schema.*;
 import org.json.JSONObject;
-
-import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-public class MovieSchema extends AbstractSchema {
+@Service
+public class MovieSchema implements FieldProducer {
 
-    public MovieSchema(final TmdbSearcher searcher) {
-        super(searcher);
+    private SearchDao searchDao;
+
+    @Autowired
+    public MovieSchema(final SearchDao searchDao) {
+        this.searchDao = searchDao;
     }
 
     private DataFetcher movieSchemaDataFetcher = (DataFetchingEnvironment env) -> {
@@ -90,10 +91,8 @@ public class MovieSchema extends AbstractSchema {
             .argument(arg -> arg.name("query")
                     .type(GraphQLString))
             .dataFetcher(env -> {
-                HashMap<String, Object> queryParams = new HashMap<>();
-                queryParams.put("query", env.getArgument("query"));
-                HttpResponse<JsonNode> response = searcher.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, queryParams);
-                return response.getBody().getObject().getJSONArray("results");
+                String query = env.getArgument("query");
+                return searchDao.searchMoviesWithQuery(query);
             }).build();
 
     public GraphQLFieldDefinition getFieldDefinition() {

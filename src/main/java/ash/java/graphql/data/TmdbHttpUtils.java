@@ -6,17 +6,15 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 import static ash.java.graphql.ApiKeyManager.getKey;
 import static ash.java.graphql.data.TmdbUrls.*;
 
-@Service
-public class TmdbSearcher {
+public class TmdbHttpUtils {
 
-    private static Logger log = LoggerFactory.getLogger(TmdbSearcher.class);
+    private static Logger log = LoggerFactory.getLogger(TmdbHttpUtils.class);
 
     private static final String API_KEY = getKey();
 

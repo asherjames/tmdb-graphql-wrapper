@@ -1,5 +1,5 @@
 import ash.java.graphql.TmdbSchema;
-import ash.java.graphql.data.TmdbSearcher;
+import ash.java.graphql.data.TmdbHttpUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -11,9 +11,9 @@ public class MovieSearchQueryTest {
 
     @BeforeClass
     public static void setupResults() {
-        TmdbSchema schema = new TmdbSchema(new TmdbSearcher());
-
-        resultObject = schema.executeQuery("{movieSearch(query: \"Alien\"){poster_path}}");
+//        TmdbSchema schema = new TmdbSchema(new TmdbHttpUtils());
+//
+//        resultObject = schema.executeQuery("{movieSearch(query: \"Alien\"){poster_path}}");
     }
 
     @Test

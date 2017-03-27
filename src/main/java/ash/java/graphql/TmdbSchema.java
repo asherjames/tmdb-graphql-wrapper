@@ -1,6 +1,5 @@
 package ash.java.graphql;
 
-import ash.java.graphql.data.TmdbSearcher;
 import ash.java.graphql.schemas.GenreSchema;
 import ash.java.graphql.schemas.KeywordSchema;
 import ash.java.graphql.schemas.MovieSchema;
@@ -18,14 +17,10 @@ import static graphql.schema.GraphQLObjectType.newObject;
 public class TmdbSchema {
 
     private GraphQL graphQL;
-    private static Logger Log = LoggerFactory.getLogger(TmdbSchema.class);
+    private static Logger log = LoggerFactory.getLogger(TmdbSchema.class);
 
     @Autowired
-    public TmdbSchema(TmdbSearcher searcher) {
-        MovieSchema movieSchema = new MovieSchema(searcher);
-        KeywordSchema keywordSchema = new KeywordSchema(searcher);
-        GenreSchema genreSchema = new GenreSchema(searcher);
-
+    public TmdbSchema(GenreSchema genreSchema, KeywordSchema keywordSchema, MovieSchema movieSchema) {
         GraphQLObjectType queryType = newObject()
                 .name("QueryType")
                 .field(movieSchema.getFieldDefinition())
@@ -41,7 +36,7 @@ public class TmdbSchema {
     }
 
     public Object executeQuery(String query) {
-        Log.info("Executing query: {}", query);
+        log.info("Executing query: {}", query);
         return graphQL.execute(query);
     }
 }

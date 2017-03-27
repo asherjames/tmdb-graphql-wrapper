@@ -1,21 +1,24 @@
 package ash.java.graphql.schemas;
 
-import ash.java.graphql.data.TmdbSearcher;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
+import ash.java.graphql.data.GenreDao;
 import graphql.schema.*;
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-import static ash.java.graphql.data.TmdbUrls.*;
+@Service
+public class GenreSchema implements FieldProducer {
 
-public class GenreSchema extends AbstractSchema {
+    private GenreDao genreDao;
 
-    public GenreSchema(final TmdbSearcher searcher) {
-        super(searcher);
+    @Autowired
+    public GenreSchema(final GenreDao genreDao) {
+        this.genreDao = genreDao;
     }
 
     private GraphQLObjectType genreObjectType = newObject()
@@ -24,25 +27,23 @@ public class GenreSchema extends AbstractSchema {
                     .type(GraphQLInt)
                     .name("id")
                     .dataFetcher(env -> {
-                        JSONObject object = (JSONObject) env.getSource();
-                        return object.get("id");
+                        Map.Entry<Integer, String> entry = (Map.Entry<Integer, String>) env.getSource();
+                        return entry.getKey();
                     }))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("name")
                     .dataFetcher(env -> {
-                        JSONObject object = (JSONObject) env.getSource();
-                        return object.get("name");
+                        Map.Entry<Integer, String> entry = (Map.Entry<Integer, String>) env.getSource();
+                        return entry.getValue();
                     }))
             .build();
 
     private GraphQLFieldDefinition genreListFieldDefinition = newFieldDefinition()
             .type(new GraphQLList(genreObjectType))
             .name("genres")
-            .dataFetcher(env -> {
-                HttpResponse<JsonNode> response = searcher.sendRequest(TmdbUrl.GENRE_LIST_URL);
-                return response.getBody().getObject().get("genres");
-            }).build();
+            .dataFetcher(env -> genreDao.getAllMovieGenres())
+            .build();
 
     public GraphQLFieldDefinition getFieldDefinition() {
         return genreListFieldDefinition;

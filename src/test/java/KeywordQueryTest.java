@@ -1,6 +1,5 @@
 import ash.java.graphql.TmdbSchema;
-import ash.java.graphql.data.TmdbSearcher;
-import com.google.gson.Gson;
+import ash.java.graphql.data.TmdbHttpUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.junit.BeforeClass;
@@ -19,16 +18,16 @@ public class KeywordQueryTest {
 
     @BeforeClass
     public static void setupResults() {
-        TmdbSchema schema = new TmdbSchema(new TmdbSearcher());
-
-        resultObject = schema.executeQuery("{keywordList(filmId: \"123\"){id name}}");
-        resultJson = TestUtil.extractData(resultObject);
-
-        resultIdObject = schema.executeQuery("{keywordList(filmId: \"123\"){id}}");
-        resultIdJson = TestUtil.extractData(resultIdObject);
-
-        resultNameObject = schema.executeQuery("{keywordList(filmId: \"123\"){name}}");
-        resultNameJson = TestUtil.extractData(resultNameObject);
+//        TmdbSchema schema = new TmdbSchema(new TmdbHttpUtils());
+//
+//        resultObject = schema.executeQuery("{keywordList(filmId: \"123\"){id name}}");
+//        resultJson = TestUtil.extractData(resultObject);
+//
+//        resultIdObject = schema.executeQuery("{keywordList(filmId: \"123\"){id}}");
+//        resultIdJson = TestUtil.extractData(resultIdObject);
+//
+//        resultNameObject = schema.executeQuery("{keywordList(filmId: \"123\"){name}}");
+//        resultNameJson = TestUtil.extractData(resultNameObject);
     }
 
     @Test

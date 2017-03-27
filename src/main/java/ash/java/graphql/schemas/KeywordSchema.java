@@ -1,21 +1,24 @@
 package ash.java.graphql.schemas;
 
-import ash.java.graphql.data.TmdbSearcher;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
+import ash.java.graphql.data.MovieDao;
 import graphql.schema.*;
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-import static ash.java.graphql.data.TmdbUrls.*;
+@Service
+public class KeywordSchema implements FieldProducer {
 
-public class KeywordSchema extends AbstractSchema {
+    private MovieDao movieDao;
 
-    public KeywordSchema(TmdbSearcher searcher) {
-        super(searcher);
+    @Autowired
+    public KeywordSchema(MovieDao movieDao) {
+        this.movieDao = movieDao;
     }
 
     private GraphQLObjectType keywordObjectType = newObject()
@@ -24,15 +27,15 @@ public class KeywordSchema extends AbstractSchema {
                     .type(GraphQLInt)
                     .name("id")
                     .dataFetcher(env -> {
-                        JSONObject object = (JSONObject) env.getSource();
-                        return object.get("id");
+                        Map.Entry<Integer, String> entry = (Map.Entry<Integer, String>) env.getSource();
+                        return entry.getKey();
                     }))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("name")
                     .dataFetcher(env -> {
-                        JSONObject object = (JSONObject) env.getSource();
-                        return object.get("name");
+                        Map.Entry<Integer, String> entry = (Map.Entry<Integer, String>) env.getSource();
+                        return entry.getValue();
                     }))
             .build();
 
@@ -40,11 +43,12 @@ public class KeywordSchema extends AbstractSchema {
             .type(new GraphQLList(keywordObjectType))
             .name("keywordList")
             .argument(arg -> arg.name("filmId")
-                    .type(GraphQLString))
+                    .type(GraphQLInt))
             .dataFetcher(env -> {
-                HttpResponse<JsonNode> response = searcher.sendRequest(TmdbArgUrl.MOVIE_KEYWORDS_URL, env.getArgument("filmId"));
-                return response.getBody().getObject().getJSONArray("keywords");
-            }).build();
+                Integer filmId = env.getArgument("filmId");
+                return movieDao.getKeywordsForMovie(filmId).entrySet();
+            })
+            .build();
 
     public GraphQLFieldDefinition getFieldDefinition() {
         return keywordResultFieldType;
