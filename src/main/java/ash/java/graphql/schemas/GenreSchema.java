@@ -1,11 +1,10 @@
 package ash.java.graphql.schemas;
 
 import ash.java.graphql.data.GenreDao;
+import ash.java.graphql.data.models.Genre;
 import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
@@ -27,15 +26,15 @@ public class GenreSchema implements FieldProducer {
                     .type(GraphQLInt)
                     .name("id")
                     .dataFetcher(env -> {
-                        Map.Entry<Integer, String> entry = (Map.Entry<Integer, String>) env.getSource();
-                        return entry.getKey();
+                        Genre genre = (Genre) env.getSource();
+                        return genre.getId();
                     }))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("name")
                     .dataFetcher(env -> {
-                        Map.Entry<Integer, String> entry = (Map.Entry<Integer, String>) env.getSource();
-                        return entry.getValue();
+                        Genre genre = (Genre) env.getSource();
+                        return genre.getName();
                     }))
             .build();
 

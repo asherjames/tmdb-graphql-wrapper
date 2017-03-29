@@ -1,33 +1,43 @@
 import ash.java.graphql.TmdbSchema;
-import ash.java.graphql.data.TmdbHttpUtils;
+import ash.java.graphql.data.GenreDao;
+import ash.java.graphql.data.models.Genre;
+import ash.java.graphql.schemas.FieldProducer;
+import ash.java.graphql.schemas.GenreSchema;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GenreQueryTest {
 
     private static Object resultObjectIdName;
     private static JsonObject resultJsonIdName;
+
     private static Object resultObjectId;
     private static JsonObject resultJsonId;
+
     private static Object resultObjectName;
     private static JsonObject resultJsonName;
 
     @BeforeClass
     public static void setupResults() {
-//        TmdbSchema schema = new TmdbSchema(new TmdbHttpUtils());
-//
-//        resultObjectIdName = schema.executeQuery("{genres{id name}}");
-//        resultJsonIdName = TestUtil.extractData(resultObjectIdName);
-//
-//        resultObjectId = schema.executeQuery("{genres{id}}");
-//        resultJsonId = TestUtil.extractData(resultObjectId);
-//
-//        resultObjectName = schema.executeQuery("{genres{name}}");
-//        resultJsonName = TestUtil.extractData(resultObjectName);
+        TmdbSchema schema = new TmdbSchema(mockFields());
+
+        resultObjectIdName = schema.executeQuery("{genres{id name}}");
+        resultJsonIdName = TestUtil.extractData(resultObjectIdName);
+
+        resultObjectId = schema.executeQuery("{genres{id}}");
+        resultJsonId = TestUtil.extractData(resultObjectId);
+
+        resultObjectName = schema.executeQuery("{genres{name}}");
+        resultJsonName = TestUtil.extractData(resultObjectName);
     }
 
     @Test
@@ -37,7 +47,7 @@ public class GenreQueryTest {
 
     @Test
     public void correctQueryShouldReturnCorrectNumberOfGenres() {
-        assertThat(resultJsonIdName.get("genres").getAsJsonArray().size()).isEqualTo(19);
+        assertThat(resultJsonIdName.get("genres").getAsJsonArray().size()).isEqualTo(3);
     }
 
     @Test
@@ -65,5 +75,21 @@ public class GenreQueryTest {
 
         assertThat(resultJsonName.get("genres").getAsJsonArray().get(0).getAsJsonObject().get("name"))
                 .isEqualTo(new JsonPrimitive("Action"));
+    }
+
+    private static List<FieldProducer> mockFields() {
+        List<Genre> genres = new ArrayList<>();
+        genres.add(new Genre(28, "Action"));
+        genres.add(new Genre(35, "Comedy"));
+        genres.add(new Genre(14, "Fantasy"));
+
+        GenreDao genreDao = mock(GenreDao.class);
+
+        when(genreDao.getAllMovieGenres()).thenReturn(genres);
+
+        List<FieldProducer> fieldProducers = new ArrayList<>();
+        fieldProducers.add(new GenreSchema(genreDao));
+
+        return fieldProducers;
     }
 }

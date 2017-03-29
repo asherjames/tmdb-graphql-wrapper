@@ -1,8 +1,10 @@
 package ash.java.graphql.data;
 
-import java.util.Map;
+import ash.java.graphql.data.models.Genre;
+
+import java.util.List;
 
 public interface GenreDao {
 
-    Map<Integer, String> getAllMovieGenres();
+    List<Genre> getAllMovieGenres();
 }
