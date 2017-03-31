@@ -11,12 +11,12 @@ import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
 @Service
-public class MovieSchema implements FieldProducer {
+public class MovieSearchSchema implements FieldProducer {
 
     private SearchDao searchDao;
 
     @Autowired
-    public MovieSchema(final SearchDao searchDao) {
+    public MovieSearchSchema(final SearchDao searchDao) {
         this.searchDao = searchDao;
     }
 

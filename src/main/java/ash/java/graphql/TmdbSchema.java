@@ -1,9 +1,6 @@
 package ash.java.graphql;
 
 import ash.java.graphql.schemas.FieldProducer;
-import ash.java.graphql.schemas.GenreSchema;
-import ash.java.graphql.schemas.KeywordSchema;
-import ash.java.graphql.schemas.MovieSchema;
 import graphql.GraphQL;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLObjectType;

@@ -1,8 +1,11 @@
+package ash.java.graphql.test.schemas;
+
 import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.GenreDao;
 import ash.java.graphql.data.models.Genre;
 import ash.java.graphql.schemas.FieldProducer;
 import ash.java.graphql.schemas.GenreSchema;
+import ash.java.graphql.test.TestUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.junit.BeforeClass;
