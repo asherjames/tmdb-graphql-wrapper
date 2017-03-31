@@ -1,8 +1,10 @@
 package ash.java.graphql.data;
 
-import java.util.Map;
+import ash.java.graphql.data.models.Keyword;
+
+import java.util.List;
 
 public interface MovieDao {
 
-    Map<Integer, String> getKeywordsForMovie(int movieId);
+    List<Keyword> getKeywordsForMovie(int movieId);
 }

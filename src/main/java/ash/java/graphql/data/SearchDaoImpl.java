@@ -1,5 +1,6 @@
 package ash.java.graphql.data;
 
+import ash.java.graphql.data.models.Movie;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

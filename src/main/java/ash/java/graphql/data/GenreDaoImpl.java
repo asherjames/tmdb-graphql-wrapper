@@ -14,7 +14,7 @@ import java.util.List;
 public class GenreDaoImpl implements GenreDao {
 
     private Gson gson = new Gson();
-    private Type mapType = new TypeToken<List<Genre>>(){}.getType();
+    private Type genreListType = new TypeToken<List<Genre>>(){}.getType();
 
     @Override
     public List<Genre> getAllMovieGenres() {
@@ -22,6 +22,6 @@ public class GenreDaoImpl implements GenreDao {
 
         String genresString = response.getBody().getObject().get("genres").toString();
 
-        return gson.fromJson(genresString, mapType);
+        return gson.fromJson(genresString, genreListType);
     }
 }
