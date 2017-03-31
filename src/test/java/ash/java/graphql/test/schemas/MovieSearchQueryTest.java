@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -38,6 +40,16 @@ public class MovieSearchQueryTest {
         dasBoot.setAdult(false);
         dasBoot.setOverview("A German submarine hunts allied ships...");
         dasBoot.setReleaseDate("1981-09-16");
+        dasBoot.setGenreIds(Stream.of(28,18,36,10752,12).collect(Collectors.toList()));
+        dasBoot.setId(387);
+        dasBoot.setOriginalTitle("Das Boot");
+        dasBoot.setOriginalLanguage("de");
+        dasBoot.setTitle("Das Boot");
+        dasBoot.setBackdropPath("/mc0PbKrrFRCUEpI09reR3ihHrIo.jpg");
+        dasBoot.setPopularity(3.495501);
+        dasBoot.setVoteCount(501);
+        dasBoot.setVideo(false);
+        dasBoot.setVoteAverage(7.9);
 
         movies.add(dasBoot);
 

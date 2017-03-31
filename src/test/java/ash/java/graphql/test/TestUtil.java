@@ -8,6 +8,6 @@ public class TestUtil {
     private static Gson gson = new Gson();
 
     public static JsonObject extractData(Object input) {
-        return gson.toJsonTree(input).getAsJsonObject().get("ash/java/graphql/test/data").getAsJsonObject();
+        return gson.toJsonTree(input).getAsJsonObject().get("data").getAsJsonObject();
     }
 }

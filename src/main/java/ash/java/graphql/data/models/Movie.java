@@ -6,15 +6,15 @@ import java.util.List;
 
 public class Movie {
 
-    private int id;
+    private Integer id;
 
     private String title;
 
-    private double popularity;
+    private Double popularity;
 
-    private boolean video;
+    private Boolean video;
 
-    private boolean adult;
+    private Boolean adult;
 
     private String overview;
 
@@ -37,10 +37,10 @@ public class Movie {
     private String backdropPath;
 
     @SerializedName("vote_count")
-    private int voteCount;
+    private Integer voteCount;
 
     @SerializedName("vote_average")
-    private double voteAverage;
+    private Double voteAverage;
 
     public String getPosterPath() {
         return posterPath;
@@ -74,11 +74,11 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public List<Integer> getGenreId() {
+    public List<Integer> getGenreIds() {
         return genreIds;
     }
 
-    public void setGenreId(List<Integer> genreId) {
+    public void setGenreIds(List<Integer> genreId) {
         this.genreIds = genreId;
     }
 

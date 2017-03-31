@@ -1,10 +1,12 @@
 package ash.java.graphql.schemas;
 
 import ash.java.graphql.data.SearchDao;
+import ash.java.graphql.data.models.Movie;
 import graphql.schema.*;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Function;
 
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
@@ -20,69 +22,65 @@ public class MovieSearchSchema implements FieldProducer {
         this.searchDao = searchDao;
     }
 
-    private DataFetcher movieSchemaDataFetcher = (DataFetchingEnvironment env) -> {
-        JSONObject object = (JSONObject) env.getSource();
-        return object.get(env.getFields().get(0).getName());
-    };
+    private DataFetcher makeDataFetcher(Function<Movie, Object> func) {
+        return (DataFetchingEnvironment env) -> {
+            Movie movie = (Movie) env.getSource();
+            return func.apply(movie);
+        };
+    }
 
     private GraphQLObjectType movieObjectType = newObject()
             .name("movie")
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("poster_path")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getPosterPath)))
             .field(newFieldDefinition()
                     .type(GraphQLBoolean)
-                    .name("adult")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .name("adult"))
             .field(newFieldDefinition()
                     .type(GraphQLString)
-                    .name("overview")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .name("overview"))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("release_date")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getReleaseDate)))
             .field(newFieldDefinition()
                     .type(new GraphQLList(GraphQLInt))
                     .name("genres_ids")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getGenreIds)))
             .field(newFieldDefinition()
                     .type(GraphQLInt)
-                    .name("id")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .name("id"))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("original_title")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getOriginalTitle)))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("original_language")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getOriginalLanguage)))
             .field(newFieldDefinition()
                     .type(GraphQLString)
-                    .name("title")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .name("title"))
             .field(newFieldDefinition()
                     .type(GraphQLString)
                     .name("backdrop_path")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getBackdropPath)))
             .field(newFieldDefinition()
                     .type(GraphQLLong)
-                    .name("popularity")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .name("popularity"))
             .field(newFieldDefinition()
                     .type(GraphQLInt)
                     .name("vote_count")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getVoteCount)))
             .field(newFieldDefinition()
                     .type(GraphQLBoolean)
-                    .name("video")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .name("video"))
             .field(newFieldDefinition()
                     .type(GraphQLLong)
                     .name("vote_average")
-                    .dataFetcher(movieSchemaDataFetcher))
+                    .dataFetcher(makeDataFetcher(Movie::getVoteAverage)))
             .build();
 
     private GraphQLFieldDefinition movieSearchFieldDefinition = newFieldDefinition()
