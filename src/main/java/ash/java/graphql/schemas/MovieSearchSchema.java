@@ -68,7 +68,7 @@ public class MovieSearchSchema implements FieldProducer {
                     .name("backdrop_path")
                     .dataFetcher(makeDataFetcher(Movie::getBackdropPath)))
             .field(newFieldDefinition()
-                    .type(GraphQLLong)
+                    .type(GraphQLFloat)
                     .name("popularity"))
             .field(newFieldDefinition()
                     .type(GraphQLInt)

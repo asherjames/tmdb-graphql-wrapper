@@ -25,12 +25,18 @@ public class MovieSearchQueryTest {
     private static Object posterPathResultObject;
     private static JsonObject posterPathResultJson;
 
+    private static Object multipleFieldsResultObject;
+    private static JsonObject multipleFieldsResultJson;
+
     @BeforeClass
     public static void setupResults() {
         TmdbSchema schema = new TmdbSchema(mockFields());
 
         posterPathResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){poster_path}}");
         posterPathResultJson = TestUtil.extractData(posterPathResultObject);
+
+        multipleFieldsResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){release_date title popularity vote_count}}");
+        multipleFieldsResultJson = TestUtil.extractData(multipleFieldsResultObject);
     }
 
     @Test
@@ -42,6 +48,16 @@ public class MovieSearchQueryTest {
     public void correctPosterpathQueryShouldReturnCorrectValue() {
         assertThat(posterPathResultJson.get("movieSearch").getAsJsonArray().get(0).getAsJsonObject().get("poster_path"))
                 .isEqualTo(new JsonPrimitive("/kI1rptTkqDWj6SBRsYwguBvPViT.jpg"));
+    }
+
+    @Test
+    public void correctMultipleFieldQueryReturnsAllFields() {
+        JsonObject queryObject = multipleFieldsResultJson.get("movieSearch").getAsJsonArray().get(0).getAsJsonObject();
+
+        assertThat(queryObject.get("release_date")).isEqualTo(new JsonPrimitive("1981-09-16"));
+        assertThat(queryObject.get("title")).isEqualTo(new JsonPrimitive("Das Boot"));
+        assertThat(queryObject.get("popularity")).isEqualTo(new JsonPrimitive(3.495501));
+        assertThat(queryObject.get("vote_count")).isEqualTo(new JsonPrimitive(501));
     }
 
     private static List<FieldProducer> mockFields() {
