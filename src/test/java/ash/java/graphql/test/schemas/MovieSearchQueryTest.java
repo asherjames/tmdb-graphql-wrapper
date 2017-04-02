@@ -1,9 +1,13 @@
 package ash.java.graphql.test.schemas;
 
+import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.SearchDao;
 import ash.java.graphql.data.models.Movie;
 import ash.java.graphql.schemas.FieldProducer;
 import ash.java.graphql.schemas.MovieSearchSchema;
+import ash.java.graphql.test.TestUtil;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,18 +22,26 @@ import static org.mockito.Mockito.when;
 
 public class MovieSearchQueryTest {
 
-    private static Object resultObject;
+    private static Object posterPathResultObject;
+    private static JsonObject posterPathResultJson;
 
     @BeforeClass
     public static void setupResults() {
-//        TmdbSchema schema = new TmdbSchema(new TmdbHttpUtils());
-//
-//        resultObject = schema.executeQuery("{movieSearch(query: \"Alien\"){poster_path}}");
+        TmdbSchema schema = new TmdbSchema(mockFields());
+
+        posterPathResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){poster_path}}");
+        posterPathResultJson = TestUtil.extractData(posterPathResultObject);
     }
 
-//    @Test
-    public void correctQueryShouldNotReturnNull() {
-        assertThat(resultObject).isNotNull();
+    @Test
+    public void correctPosterpathQueryShouldNotReturnNull() {
+        assertThat(posterPathResultObject).isNotNull();
+    }
+
+    @Test
+    public void correctPosterpathQueryShouldReturnCorrectValue() {
+        assertThat(posterPathResultJson.get("movieSearch").getAsJsonArray().get(0).getAsJsonObject().get("poster_path"))
+                .isEqualTo(new JsonPrimitive("/kI1rptTkqDWj6SBRsYwguBvPViT.jpg"));
     }
 
     private static List<FieldProducer> mockFields() {
@@ -40,7 +52,7 @@ public class MovieSearchQueryTest {
         dasBoot.setAdult(false);
         dasBoot.setOverview("A German submarine hunts allied ships...");
         dasBoot.setReleaseDate("1981-09-16");
-        dasBoot.setGenreIds(Stream.of(28,18,36,10752,12).collect(Collectors.toList()));
+        dasBoot.setGenreIds(Stream.of(28, 18, 36, 10752, 12).collect(Collectors.toList()));
         dasBoot.setId(387);
         dasBoot.setOriginalTitle("Das Boot");
         dasBoot.setOriginalLanguage("de");
@@ -55,7 +67,7 @@ public class MovieSearchQueryTest {
 
         SearchDao searchDao = mock(SearchDao.class);
 
-        when(searchDao.searchMoviesWithQuery("das boot")).thenReturn(movies);
+        when(searchDao.searchMoviesWithQuery("Das Boot")).thenReturn(movies);
 
         List<FieldProducer> fieldProducers = new ArrayList<>();
         fieldProducers.add(new MovieSearchSchema(searchDao));
