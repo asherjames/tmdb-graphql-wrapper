@@ -9,5 +9,5 @@ public interface SearchDao {
 
     List<Movie> searchMoviesWithQuery(String query);
 
-    List<Movie> searchMoviesWithMultipleParameters(Map<String, String> params);
+    List<Movie> searchMoviesWithMultipleParameters(Map<String, Object> params);
 }

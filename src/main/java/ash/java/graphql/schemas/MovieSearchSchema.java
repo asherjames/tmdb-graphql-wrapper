@@ -6,6 +6,7 @@ import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.function.Function;
 
 import static graphql.Scalars.*;
@@ -93,10 +94,8 @@ public class MovieSearchSchema implements FieldProducer {
             .argument(arg -> arg.name("region").type(GraphQLString))
             .argument(arg -> arg.name("year").type(GraphQLInt))
             .argument(arg -> arg.name("primary_release_year").type(GraphQLInt))
-            .dataFetcher(env -> {
-                String query = env.getArgument("query");
-                return searchDao.searchMoviesWithQuery(query);
-            }).build();
+            .dataFetcher(env -> searchDao.searchMoviesWithMultipleParameters(env.getArguments()))
+            .build();
 
     public GraphQLFieldDefinition getFieldDefinition() {
         return movieSearchFieldDefinition;

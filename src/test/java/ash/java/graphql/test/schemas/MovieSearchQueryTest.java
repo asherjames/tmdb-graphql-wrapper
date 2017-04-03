@@ -12,7 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -83,7 +85,16 @@ public class MovieSearchQueryTest {
 
         SearchDao searchDao = mock(SearchDao.class);
 
-        when(searchDao.searchMoviesWithQuery("Das Boot")).thenReturn(movies);
+        Map<String, Object> params = new HashMap<>();
+        params.put("query", "Das Boot");
+        params.put("language", null);
+        params.put("page", null);
+        params.put("include_adult", null);
+        params.put("region", null);
+        params.put("year", null);
+        params.put("primary_release_year", null);
+
+        when(searchDao.searchMoviesWithMultipleParameters(params)).thenReturn(movies);
 
         List<FieldProducer> fieldProducers = new ArrayList<>();
         fieldProducers.add(new MovieSearchSchema(searchDao));

@@ -30,7 +30,11 @@ public class SearchDaoImpl implements SearchDao {
     }
 
     @Override
-    public List<Movie> searchMoviesWithMultipleParameters(Map<String, String> params) {
-        return null;
+    public List<Movie> searchMoviesWithMultipleParameters(Map<String, Object> params) {
+        HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, params);
+
+        String searchResults = response.getBody().getObject().get("results").toString();
+
+        return gson.fromJson(searchResults, movieSearchListType);
     }
 }
