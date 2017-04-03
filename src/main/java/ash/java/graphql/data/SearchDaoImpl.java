@@ -28,4 +28,9 @@ public class SearchDaoImpl implements SearchDao {
 
         return gson.fromJson(searchResults, movieSearchListType);
     }
+
+    @Override
+    public List<Movie> searchMoviesWithMultipleParameters(Map<String, String> params) {
+        return null;
+    }
 }

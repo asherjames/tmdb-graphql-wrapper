@@ -86,8 +86,13 @@ public class MovieSearchSchema implements FieldProducer {
     private GraphQLFieldDefinition movieSearchFieldDefinition = newFieldDefinition()
             .type(new GraphQLList(movieObjectType))
             .name("movieSearch")
-            .argument(arg -> arg.name("query")
-                    .type(GraphQLString))
+            .argument(arg -> arg.name("query").type(new GraphQLNonNull(GraphQLString)))
+            .argument(arg -> arg.name("language").type(GraphQLString))
+            .argument(arg -> arg.name("page").type(GraphQLInt))
+            .argument(arg -> arg.name("include_adult").type(GraphQLBoolean))
+            .argument(arg -> arg.name("region").type(GraphQLString))
+            .argument(arg -> arg.name("year").type(GraphQLInt))
+            .argument(arg -> arg.name("primary_release_year").type(GraphQLInt))
             .dataFetcher(env -> {
                 String query = env.getArgument("query");
                 return searchDao.searchMoviesWithQuery(query);
