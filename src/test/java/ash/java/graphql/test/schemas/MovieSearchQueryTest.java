@@ -6,8 +6,10 @@ import ash.java.graphql.data.models.Movie;
 import ash.java.graphql.schemas.FieldProducer;
 import ash.java.graphql.schemas.MovieSearchSchema;
 import ash.java.graphql.test.TestUtil;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import graphql.ExecutionResultImpl;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,6 +32,9 @@ public class MovieSearchQueryTest {
     private static Object multipleFieldsResultObject;
     private static JsonObject multipleFieldsResultJson;
 
+    private static Object nullQueryResultObject;
+    private static JsonArray nullQueryResultJson;
+
     @BeforeClass
     public static void setupResults() {
         TmdbSchema schema = new TmdbSchema(mockFields());
@@ -39,6 +44,9 @@ public class MovieSearchQueryTest {
 
         multipleFieldsResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){release_date title popularity vote_count}}");
         multipleFieldsResultJson = TestUtil.extractData(multipleFieldsResultObject);
+
+        nullQueryResultObject = schema.executeQuery("{movieSearch(year: 1981){release_date title popularity vote_count}}");
+        nullQueryResultJson = TestUtil.extractError(nullQueryResultObject);
     }
 
     @Test
@@ -60,6 +68,13 @@ public class MovieSearchQueryTest {
         assertThat(queryObject.get("title")).isEqualTo(new JsonPrimitive("Das Boot"));
         assertThat(queryObject.get("popularity")).isEqualTo(new JsonPrimitive(3.495501));
         assertThat(queryObject.get("vote_count")).isEqualTo(new JsonPrimitive(501));
+    }
+
+    @Test
+    public void nullQueryReturnsError() {
+        JsonObject errorObject = nullQueryResultJson.get(0).getAsJsonObject();
+
+        assertThat(errorObject.get("description").getAsString()).isEqualTo("Missing field argument query");
     }
 
     private static List<FieldProducer> mockFields() {
