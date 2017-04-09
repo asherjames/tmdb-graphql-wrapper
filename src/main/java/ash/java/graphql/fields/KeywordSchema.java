@@ -1,4 +1,4 @@
-package ash.java.graphql.schemas;
+package ash.java.graphql.fields;
 
 import ash.java.graphql.data.MovieDao;
 import ash.java.graphql.data.models.Keyword;

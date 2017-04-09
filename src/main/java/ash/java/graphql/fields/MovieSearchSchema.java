@@ -1,4 +1,4 @@
-package ash.java.graphql.schemas;
+package ash.java.graphql.fields;
 
 import ash.java.graphql.data.SearchDao;
 import ash.java.graphql.data.models.Movie;
@@ -6,7 +6,6 @@ import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.function.Function;
 
 import static graphql.Scalars.*;

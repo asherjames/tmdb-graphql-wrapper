@@ -1,6 +1,6 @@
 package ash.java.graphql;
 
-import ash.java.graphql.schemas.FieldProducer;
+import ash.java.graphql.fields.FieldProducer;
 import graphql.GraphQL;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLObjectType;

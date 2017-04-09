@@ -3,7 +3,7 @@ package ash.java.graphql.data.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Person {
-    
+
     private Boolean adult;
 
     private String name;

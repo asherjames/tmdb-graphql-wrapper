@@ -1,4 +1,4 @@
-package ash.java.graphql.schemas;
+package ash.java.graphql.fields;
 
 import graphql.schema.GraphQLFieldDefinition;
 
