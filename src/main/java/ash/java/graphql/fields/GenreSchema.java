@@ -2,6 +2,7 @@ package ash.java.graphql.fields;
 
 import ash.java.graphql.data.GenreDao;
 import ash.java.graphql.data.models.Genre;
+import ash.java.graphql.types.GenreType;
 import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,26 +21,8 @@ public class GenreSchema implements FieldProducer {
         this.genreDao = genreDao;
     }
 
-    private GraphQLObjectType genreObjectType = newObject()
-            .name("genre")
-            .field(newFieldDefinition()
-                    .type(GraphQLInt)
-                    .name("id")
-                    .dataFetcher(env -> {
-                        Genre genre = (Genre) env.getSource();
-                        return genre.getId();
-                    }))
-            .field(newFieldDefinition()
-                    .type(GraphQLString)
-                    .name("name")
-                    .dataFetcher(env -> {
-                        Genre genre = (Genre) env.getSource();
-                        return genre.getName();
-                    }))
-            .build();
-
     private GraphQLFieldDefinition genreListFieldDefinition = newFieldDefinition()
-            .type(new GraphQLList(genreObjectType))
+            .type(new GraphQLList(GenreType.getType()))
             .name("genres")
             .dataFetcher(env -> genreDao.getAllMovieGenres())
             .build();
