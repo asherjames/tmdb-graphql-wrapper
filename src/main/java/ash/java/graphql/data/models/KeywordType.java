@@ -2,7 +2,7 @@ package ash.java.graphql.data.models;
 
 import graphql.annotations.GraphQLField;
 
-public class Keyword extends TmdbType {
+public class KeywordType extends TmdbObjectType {
 
     @GraphQLField
     private int id;
@@ -10,7 +10,9 @@ public class Keyword extends TmdbType {
     @GraphQLField
     private String name;
 
-    public Keyword(int id, String name) {
+    public KeywordType() {}
+
+    public KeywordType(int id, String name) {
         this.id = id;
         this.name = name;
     }

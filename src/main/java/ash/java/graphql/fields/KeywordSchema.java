@@ -1,7 +1,7 @@
 package ash.java.graphql.fields;
 
 import ash.java.graphql.data.MovieDao;
-import ash.java.graphql.types.KeywordType;
+import ash.java.graphql.data.models.KeywordType;
 import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class KeywordSchema implements FieldProducer {
     }
 
     private GraphQLFieldDefinition keywordResultFieldType = newFieldDefinition()
-            .type(new GraphQLList(KeywordType.getType()))
+            .type(new GraphQLList(new KeywordType().getGraphQlType()))
             .name("keywordList")
             .argument(arg -> arg.name("filmId")
                     .type(GraphQLInt))

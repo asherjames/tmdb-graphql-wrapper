@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.data.models.Movie;
+import ash.java.graphql.data.models.MovieType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mashape.unirest.http.HttpResponse;
@@ -16,10 +16,10 @@ import java.util.Map;
 public class SearchDaoImpl implements SearchDao {
 
     private Gson gson = new Gson();
-    private Type movieSearchListType = new TypeToken<List<Movie>>(){}.getType();
+    private Type movieSearchListType = new TypeToken<List<MovieType>>(){}.getType();
 
     @Override
-    public List<Movie> searchMoviesWithQuery(String query) {
+    public List<MovieType> searchMoviesWithQuery(String query) {
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put("query", query);
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, queryMap);
@@ -30,7 +30,7 @@ public class SearchDaoImpl implements SearchDao {
     }
 
     @Override
-    public List<Movie> searchMoviesWithMultipleParameters(Map<String, Object> params) {
+    public List<MovieType> searchMoviesWithMultipleParameters(Map<String, Object> params) {
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, params);
 
         String searchResults = response.getBody().getObject().get("results").toString();

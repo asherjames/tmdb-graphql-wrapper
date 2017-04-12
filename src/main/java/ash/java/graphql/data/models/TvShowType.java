@@ -5,7 +5,7 @@ import graphql.annotations.GraphQLField;
 
 import java.util.List;
 
-public class TvShow extends TmdbType {
+public class TvShowType extends TmdbObjectType {
 
     @GraphQLField
     private Double popularity;

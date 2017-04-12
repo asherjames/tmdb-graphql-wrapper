@@ -2,7 +2,7 @@ package ash.java.graphql.data.models;
 
 import graphql.annotations.GraphQLField;
 
-public class Genre extends TmdbType {
+public class GenreType extends TmdbObjectType {
 
     @GraphQLField
     private int id;
@@ -10,7 +10,9 @@ public class Genre extends TmdbType {
     @GraphQLField
     private String name;
 
-    public Genre(int id, String name) {
+    public GenreType() {}
+
+    public GenreType(int id, String name) {
         this.id = id;
         this.name = name;
     }

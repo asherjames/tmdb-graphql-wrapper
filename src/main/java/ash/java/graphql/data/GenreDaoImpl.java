@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.data.models.Genre;
+import ash.java.graphql.data.models.GenreType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mashape.unirest.http.HttpResponse;
@@ -14,10 +14,10 @@ import java.util.List;
 public class GenreDaoImpl implements GenreDao {
 
     private Gson gson = new Gson();
-    private Type genreListType = new TypeToken<List<Genre>>(){}.getType();
+    private Type genreListType = new TypeToken<List<GenreType>>(){}.getType();
 
     @Override
-    public List<Genre> getAllMovieGenres() {
+    public List<GenreType> getAllMovieGenres() {
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbUrl.GENRE_LIST_URL);
 
         String genresString = response.getBody().getObject().get("genres").toString();

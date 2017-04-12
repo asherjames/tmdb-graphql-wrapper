@@ -6,9 +6,9 @@ import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-public class PersonType {
+public class PersonGqlType {
 
-    private PersonType() {
+    private PersonGqlType() {
     }
 
     private static GraphQLObjectType personObjectType = newObject()

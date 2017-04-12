@@ -1,15 +1,12 @@
 package ash.java.graphql.fields;
 
 import ash.java.graphql.data.GenreDao;
-import ash.java.graphql.data.models.Genre;
-import ash.java.graphql.types.GenreType;
+import ash.java.graphql.data.models.GenreType;
 import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
-import static graphql.schema.GraphQLObjectType.newObject;
 
 @Service
 public class GenreSchema implements FieldProducer {
@@ -22,7 +19,7 @@ public class GenreSchema implements FieldProducer {
     }
 
     private GraphQLFieldDefinition genreListFieldDefinition = newFieldDefinition()
-            .type(new GraphQLList(GenreType.getType()))
+            .type(new GraphQLList(new GenreType().getGraphQlType()))
             .name("genres")
             .dataFetcher(env -> genreDao.getAllMovieGenres())
             .build();

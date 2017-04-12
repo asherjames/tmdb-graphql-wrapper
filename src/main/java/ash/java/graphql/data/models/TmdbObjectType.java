@@ -5,7 +5,7 @@ import graphql.schema.GraphQLObjectType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class TmdbType {
+public abstract class TmdbObjectType {
 
     protected Logger log = LoggerFactory.getLogger(this.getClass());
 

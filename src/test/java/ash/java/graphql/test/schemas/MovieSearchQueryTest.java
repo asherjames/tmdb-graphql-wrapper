@@ -2,17 +2,13 @@ package ash.java.graphql.test.schemas;
 
 import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.SearchDao;
-import ash.java.graphql.data.models.Movie;
-import ash.java.graphql.data.models.Person;
+import ash.java.graphql.data.models.MovieType;
 import ash.java.graphql.fields.FieldProducer;
 import ash.java.graphql.fields.MovieSearchSchema;
 import ash.java.graphql.test.TestUtil;
-import ash.java.graphql.types.PersonType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import graphql.annotations.GraphQLAnnotations;
-import graphql.schema.GraphQLObjectType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -81,9 +77,9 @@ public class MovieSearchQueryTest {
     }
 
     private static List<FieldProducer> mockFields() {
-        List<Movie> movies = new ArrayList<>();
+        List<MovieType> movies = new ArrayList<>();
 
-        Movie dasBoot = new Movie();
+        MovieType dasBoot = new MovieType();
         dasBoot.setPosterPath("/kI1rptTkqDWj6SBRsYwguBvPViT.jpg");
         dasBoot.setAdult(false);
         dasBoot.setOverview("A German submarine hunts allied ships...");

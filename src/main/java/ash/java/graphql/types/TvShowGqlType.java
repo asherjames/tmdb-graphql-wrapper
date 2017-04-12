@@ -6,9 +6,9 @@ import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-public class TvShowType {
+public class TvShowGqlType {
 
-    private TvShowType() {
+    private TvShowGqlType() {
     }
 
 //    private static GraphQLObjectType tvShowObjectType = newObject()

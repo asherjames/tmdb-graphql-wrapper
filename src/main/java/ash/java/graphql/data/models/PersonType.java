@@ -3,7 +3,7 @@ package ash.java.graphql.data.models;
 import com.google.gson.annotations.SerializedName;
 import graphql.annotations.GraphQLField;
 
-public class Person extends TmdbType {
+public class PersonType extends TmdbObjectType {
 
     @GraphQLField
     private Boolean adult;

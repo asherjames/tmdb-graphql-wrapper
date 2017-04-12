@@ -5,7 +5,7 @@ import graphql.annotations.GraphQLField;
 
 import java.util.List;
 
-public class Movie extends TmdbType {
+public class MovieType extends TmdbObjectType {
 
     @GraphQLField
     private Integer id;

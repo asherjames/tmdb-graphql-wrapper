@@ -1,17 +1,13 @@
 package ash.java.graphql.fields;
 
 import ash.java.graphql.data.SearchDao;
-import ash.java.graphql.data.models.Movie;
-import ash.java.graphql.types.MovieType;
+import ash.java.graphql.types.MovieGqlType;
 import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
-
 import static graphql.Scalars.*;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
-import static graphql.schema.GraphQLObjectType.newObject;
 
 @Service
 public class MovieSearchSchema implements FieldProducer {
@@ -24,7 +20,7 @@ public class MovieSearchSchema implements FieldProducer {
     }
 
     private GraphQLFieldDefinition movieSearchFieldDefinition = newFieldDefinition()
-            .type(new GraphQLList(MovieType.getType()))
+            .type(new GraphQLList(MovieGqlType.getType()))
             .name("movieSearch")
             .argument(arg -> arg.name("query").type(new GraphQLNonNull(GraphQLString)))
             .argument(arg -> arg.name("language").type(GraphQLString))

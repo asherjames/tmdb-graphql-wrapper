@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.data.models.Keyword;
+import ash.java.graphql.data.models.KeywordType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mashape.unirest.http.HttpResponse;
@@ -14,10 +14,10 @@ import java.util.List;
 public class MovieDaoImpl implements MovieDao {
 
     private Gson gson = new Gson();
-    private Type keywordListType = new TypeToken<List<Keyword>>(){}.getType();
+    private Type keywordListType = new TypeToken<List<KeywordType>>(){}.getType();
 
     @Override
-    public List<Keyword> getKeywordsForMovie(int movieId) {
+    public List<KeywordType> getKeywordsForMovie(int movieId) {
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbArgUrl.MOVIE_KEYWORDS_URL, Integer.toString(movieId));
 
         String keywords = response.getBody().getObject().get("keywords").toString();
