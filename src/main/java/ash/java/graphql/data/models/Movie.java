@@ -1,44 +1,59 @@
 package ash.java.graphql.data.models;
 
 import com.google.gson.annotations.SerializedName;
+import graphql.annotations.GraphQLField;
 
 import java.util.List;
 
-public class Movie {
+public class Movie extends TmdbType {
 
+    @GraphQLField
     private Integer id;
 
+    @GraphQLField
     private String title;
 
+    @GraphQLField
     private Double popularity;
 
+    @GraphQLField
     private Boolean video;
 
+    @GraphQLField
     private Boolean adult;
 
+    @GraphQLField
     private String overview;
 
+    @GraphQLField
     @SerializedName("poster_path")
     private String posterPath;
 
+    @GraphQLField
     @SerializedName("release_date")
     private String releaseDate;
 
+    @GraphQLField
     @SerializedName("genre_ids")
     private List<Integer> genreIds;
 
+    @GraphQLField
     @SerializedName("original_title")
     private String originalTitle;
 
+    @GraphQLField
     @SerializedName("original_language")
     private String originalLanguage;
 
+    @GraphQLField
     @SerializedName("backdrop_path")
     private String backdropPath;
 
+    @GraphQLField
     @SerializedName("vote_count")
     private Integer voteCount;
 
+    @GraphQLField
     @SerializedName("vote_average")
     private Double voteAverage;
 

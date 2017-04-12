@@ -1,7 +1,13 @@
 package ash.java.graphql.data.models;
 
-public class Keyword {
+import graphql.annotations.GraphQLField;
+
+public class Keyword extends TmdbType {
+
+    @GraphQLField
     private int id;
+
+    @GraphQLField
     private String name;
 
     public Keyword(int id, String name) {

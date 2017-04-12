@@ -1,18 +1,24 @@
 package ash.java.graphql.data.models;
 
 import com.google.gson.annotations.SerializedName;
+import graphql.annotations.GraphQLField;
 
-public class Person {
+public class Person extends TmdbType {
 
+    @GraphQLField
     private Boolean adult;
 
+    @GraphQLField
     private String name;
 
+    @GraphQLField
     private Double popularity;
 
+    @GraphQLField
     @SerializedName("profile_path")
     private String profilePath;
 
+    @GraphQLField
     @SerializedName("media_type")
     private String mediaType;
 
