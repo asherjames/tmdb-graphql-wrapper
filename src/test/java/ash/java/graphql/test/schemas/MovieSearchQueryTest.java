@@ -38,13 +38,13 @@ public class MovieSearchQueryTest {
     public static void setupResults() {
         TmdbSchema schema = new TmdbSchema(mockFields());
 
-        posterPathResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){poster_path}}");
+        posterPathResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){posterPath}}");
         posterPathResultJson = TestUtil.extractData(posterPathResultObject);
 
-        multipleFieldsResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){release_date title popularity vote_count}}");
+        multipleFieldsResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){releaseDate title popularity voteCount}}");
         multipleFieldsResultJson = TestUtil.extractData(multipleFieldsResultObject);
 
-        nullQueryResultObject = schema.executeQuery("{movieSearch(year: 1981){release_date title popularity vote_count}}");
+        nullQueryResultObject = schema.executeQuery("{movieSearch(year: 1981){releaseDate title popularity voteCount}}");
         nullQueryResultJson = TestUtil.extractError(nullQueryResultObject);
     }
 
@@ -55,7 +55,7 @@ public class MovieSearchQueryTest {
 
     @Test
     public void correctPosterpathQueryShouldReturnCorrectValue() {
-        assertThat(posterPathResultJson.get("movieSearch").getAsJsonArray().get(0).getAsJsonObject().get("poster_path"))
+        assertThat(posterPathResultJson.get("movieSearch").getAsJsonArray().get(0).getAsJsonObject().get("posterPath"))
                 .isEqualTo(new JsonPrimitive("/kI1rptTkqDWj6SBRsYwguBvPViT.jpg"));
     }
 
@@ -63,10 +63,10 @@ public class MovieSearchQueryTest {
     public void correctMultipleFieldQueryReturnsAllFields() {
         JsonObject queryObject = multipleFieldsResultJson.get("movieSearch").getAsJsonArray().get(0).getAsJsonObject();
 
-        assertThat(queryObject.get("release_date")).isEqualTo(new JsonPrimitive("1981-09-16"));
+        assertThat(queryObject.get("releaseDate")).isEqualTo(new JsonPrimitive("1981-09-16"));
         assertThat(queryObject.get("title")).isEqualTo(new JsonPrimitive("Das Boot"));
         assertThat(queryObject.get("popularity")).isEqualTo(new JsonPrimitive(3.495501));
-        assertThat(queryObject.get("vote_count")).isEqualTo(new JsonPrimitive(501));
+        assertThat(queryObject.get("voteCount")).isEqualTo(new JsonPrimitive(501));
     }
 
     @Test
@@ -103,10 +103,10 @@ public class MovieSearchQueryTest {
         params.put("query", "Das Boot");
         params.put("language", null);
         params.put("page", null);
-        params.put("include_adult", null);
+        params.put("includeAdult", null);
         params.put("region", null);
         params.put("year", null);
-        params.put("primary_release_year", null);
+        params.put("primaryReleaseYear", null);
 
         when(searchDao.searchMoviesWithMultipleParameters(params)).thenReturn(movies);
 
