@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.data.models.GenreType;
+import ash.java.graphql.types.GenreType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mashape.unirest.http.HttpResponse;

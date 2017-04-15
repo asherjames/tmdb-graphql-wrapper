@@ -1,8 +1,8 @@
-package ash.java.graphql.data.models;
+package ash.java.graphql.types;
 
 import graphql.annotations.GraphQLField;
 
-public class KeywordType extends TmdbObjectType {
+public class GenreType extends TmdbObjectType {
 
     @GraphQLField
     private int id;
@@ -10,9 +10,9 @@ public class KeywordType extends TmdbObjectType {
     @GraphQLField
     private String name;
 
-    public KeywordType() {}
+    public GenreType() {}
 
-    public KeywordType(int id, String name) {
+    public GenreType(int id, String name) {
         this.id = id;
         this.name = name;
     }

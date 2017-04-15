@@ -1,9 +1,9 @@
 package ash.java.graphql.fields;
 
 import ash.java.graphql.data.SearchDao;
-import ash.java.graphql.data.models.MovieType;
-import ash.java.graphql.data.models.PersonType;
-import ash.java.graphql.data.models.TvShowType;
+import ash.java.graphql.types.MovieType;
+import ash.java.graphql.types.PersonType;
+import ash.java.graphql.types.TvShowType;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLUnionType;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package ash.java.graphql.test.schemas;
 
 import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.GenreDao;
-import ash.java.graphql.data.models.GenreType;
+import ash.java.graphql.types.GenreType;
 import ash.java.graphql.fields.FieldProducer;
 import ash.java.graphql.fields.GenreSchema;
 import ash.java.graphql.test.TestUtil;

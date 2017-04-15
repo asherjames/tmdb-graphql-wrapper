@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.data.models.MovieType;
+import ash.java.graphql.types.MovieType;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.data.models.KeywordType;
+import ash.java.graphql.types.KeywordType;
 
 import java.util.List;
 

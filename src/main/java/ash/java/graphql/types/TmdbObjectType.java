@@ -1,4 +1,4 @@
-package ash.java.graphql.data.models;
+package ash.java.graphql.types;
 
 import graphql.annotations.GraphQLAnnotations;
 import graphql.schema.GraphQLObjectType;

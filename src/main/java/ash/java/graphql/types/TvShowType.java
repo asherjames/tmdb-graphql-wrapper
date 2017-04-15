@@ -1,4 +1,4 @@
-package ash.java.graphql.data.models;
+package ash.java.graphql.types;
 
 import com.google.gson.annotations.SerializedName;
 import graphql.annotations.GraphQLField;
