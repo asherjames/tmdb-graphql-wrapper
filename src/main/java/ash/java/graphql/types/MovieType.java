@@ -57,6 +57,10 @@ public class MovieType extends TmdbObjectType {
     @SerializedName("vote_average")
     private Double voteAverage;
 
+    @GraphQLField
+    @SerializedName("media_type")
+    private String mediaType;
+
     public String getPosterPath() {
         return posterPath;
     }
@@ -167,5 +171,13 @@ public class MovieType extends TmdbObjectType {
 
     public void setVoteAverage(double voteAverage) {
         this.voteAverage = voteAverage;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
 }

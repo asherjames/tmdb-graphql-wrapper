@@ -1,13 +1,18 @@
 package ash.java.graphql.data;
 
 import ash.java.graphql.types.MovieType;
-import com.google.gson.Gson;
+import ash.java.graphql.types.PersonType;
+import ash.java.graphql.types.TvShowType;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +21,7 @@ import java.util.Map;
 public class SearchDaoImpl implements SearchDao {
 
     private Gson gson = new Gson();
+    private JsonParser parser = new JsonParser();
     private Type movieSearchListType = new TypeToken<List<MovieType>>(){}.getType();
 
     @Override
@@ -36,5 +42,28 @@ public class SearchDaoImpl implements SearchDao {
         String searchResults = response.getBody().getObject().get("results").toString();
 
         return gson.fromJson(searchResults, movieSearchListType);
+    }
+
+    @Override
+    public List<Object> searchMultiSearch(Map<String, Object> params) {
+        List<Object> results = new ArrayList<>();
+        HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MULTI_SEARCH_URL, params);
+
+        JsonArray multiSearchResults = parser.parse(response.getBody().toString()).getAsJsonArray();
+
+        for(JsonElement element : multiSearchResults) {
+            JsonObject jsonObject = element.getAsJsonObject();
+            String mediaType = jsonObject.get("media_type").getAsString();
+
+            if(mediaType.equals("movie")) {
+                results.add(gson.fromJson(element, MovieType.class));
+            } else if(mediaType.equals("tv")) {
+                results.add(gson.fromJson(element, TvShowType.class));
+            } else if(mediaType.equals("person")) {
+                results.add(gson.fromJson(element, PersonType.class));
+            }
+        }
+
+        return results;
     }
 }

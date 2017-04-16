@@ -26,6 +26,18 @@ public class MultiSearchSchema implements FieldProducer {
             .possibleType(new PersonType().getGraphQlType())
             .possibleType(new MovieType().getGraphQlType())
             .possibleType(new TvShowType().getGraphQlType())
+            .typeResolver(object -> {
+                if(object instanceof PersonType) {
+                    return new PersonType().getGraphQlType();
+                }
+                if(object instanceof MovieType) {
+                    return new MovieType().getGraphQlType();
+                }
+                if(object instanceof TvShowType) {
+                    return new TvShowType().getGraphQlType();
+                }
+                return null;
+            })
             .build();
 
     @Override

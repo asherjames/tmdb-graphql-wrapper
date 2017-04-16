@@ -10,4 +10,6 @@ public interface SearchDao {
     List<MovieType> searchMoviesWithQuery(String query);
 
     List<MovieType> searchMoviesWithMultipleParameters(Map<String, Object> params);
+
+    List<Object> searchMultiSearch(Map<String, Object> params);
 }

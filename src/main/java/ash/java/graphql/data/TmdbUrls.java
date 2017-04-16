@@ -24,7 +24,8 @@ public final class TmdbUrls {
     }
 
     public enum TmdbQueryUrl {
-        MOVIE_SEARCH_URL("https://api.themoviedb.org/3/search/movie");
+        MOVIE_SEARCH_URL("https://api.themoviedb.org/3/search/movie"),
+        MULTI_SEARCH_URL("https://api.themoviedb.org/3/search/multi");
 
         String url;
 
