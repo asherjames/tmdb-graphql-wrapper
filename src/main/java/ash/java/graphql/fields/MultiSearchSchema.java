@@ -5,11 +5,14 @@ import ash.java.graphql.types.MovieType;
 import ash.java.graphql.types.PersonType;
 import ash.java.graphql.types.TvShowType;
 import graphql.schema.GraphQLFieldDefinition;
+import graphql.schema.GraphQLList;
 import graphql.schema.GraphQLUnionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static graphql.Scalars.*;
 import static graphql.schema.GraphQLUnionType.newUnionType;
+import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 
 @Service
 public class MultiSearchSchema implements FieldProducer {
@@ -22,26 +25,33 @@ public class MultiSearchSchema implements FieldProducer {
     }
 
     private GraphQLUnionType multiSearchType = newUnionType()
-            .name("MultiSearch")
+            .name("MultiSearchType")
             .possibleType(new PersonType().getGraphQlType())
             .possibleType(new MovieType().getGraphQlType())
             .possibleType(new TvShowType().getGraphQlType())
             .typeResolver(object -> {
-                if(object instanceof PersonType) {
+                if (object instanceof PersonType) {
                     return new PersonType().getGraphQlType();
                 }
-                if(object instanceof MovieType) {
+                if (object instanceof MovieType) {
                     return new MovieType().getGraphQlType();
                 }
-                if(object instanceof TvShowType) {
+                if (object instanceof TvShowType) {
                     return new TvShowType().getGraphQlType();
                 }
                 return null;
             })
             .build();
 
+    private GraphQLFieldDefinition multiSearchField = newFieldDefinition()
+            .name("MultiSearch")
+            .type(new GraphQLList(multiSearchType))
+            .argument(arg -> arg.name("query").type(GraphQLString))
+            .dataFetcher(env -> searchDao.searchMultiSearch(env.getArguments()))
+            .build();
+
     @Override
     public GraphQLFieldDefinition getFieldDefinition() {
-        return null;
+        return multiSearchField;
     }
 }
