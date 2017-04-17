@@ -79,23 +79,7 @@ public class MovieSearchQueryTest {
     private static List<FieldProducer> mockFields() {
         List<MovieType> movies = new ArrayList<>();
 
-        MovieType dasBoot = new MovieType();
-        dasBoot.setPosterPath("/kI1rptTkqDWj6SBRsYwguBvPViT.jpg");
-        dasBoot.setAdult(false);
-        dasBoot.setOverview("A German submarine hunts allied ships...");
-        dasBoot.setReleaseDate("1981-09-16");
-        dasBoot.setGenreIds(Stream.of(28, 18, 36, 10752, 12).collect(Collectors.toList()));
-        dasBoot.setId(387);
-        dasBoot.setOriginalTitle("Das Boot");
-        dasBoot.setOriginalLanguage("de");
-        dasBoot.setTitle("Das Boot");
-        dasBoot.setBackdropPath("/mc0PbKrrFRCUEpI09reR3ihHrIo.jpg");
-        dasBoot.setPopularity(3.495501);
-        dasBoot.setVoteCount(501);
-        dasBoot.setVideo(false);
-        dasBoot.setVoteAverage(7.9);
-
-        movies.add(dasBoot);
+        movies.add(TestTypeInstances.getMovie());
 
         SearchDao searchDao = mock(SearchDao.class);
 
