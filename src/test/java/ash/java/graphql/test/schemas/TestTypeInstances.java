@@ -4,6 +4,8 @@ import ash.java.graphql.types.MovieType;
 import ash.java.graphql.types.PersonType;
 import ash.java.graphql.types.TvShowType;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,12 +33,32 @@ public class TestTypeInstances {
 
     public static PersonType getPerson() {
         PersonType person = new PersonType();
+        person.setProfilePath("/wlg55BTcp3kqfTb3zDtqOFyqhDR.jpg");
+        person.setAdult(false);
+        person.setId(10205);
+        person.setMediaType("person");
+        person.setName("Sigourney Weaver");
+        person.setPopularity(8.978738);
 
         return person;
     }
 
     public static TvShowType getTvShow() {
         TvShowType tvShowType = new TvShowType();
+        tvShowType.setPosterPath("/lxSzRZ49NXwsiyHuvMsd19QxduC.jpg");
+        tvShowType.setPopularity(14.202559);
+        tvShowType.setId(1408);
+        tvShowType.setOverview("Dr. Gregory House, a drug-addicted, unconventional, misanthropic medical genius...");
+        tvShowType.setBackdropPath("/6r5o8yvLx7nESRBC1iMuYBCk9Cj.jpg");
+        tvShowType.setVoteAverage(7.89);
+        tvShowType.setMediaType("tv");
+        tvShowType.setFirstAirDate("2004-11-16");
+        tvShowType.setOriginCountry(Arrays.asList("US"));
+        tvShowType.setGenreIds(Arrays.asList(18, 35, 9648));
+        tvShowType.setOriginalLanguage("en");
+        tvShowType.setVoteCount(418);
+        tvShowType.setName("House");
+        tvShowType.setOriginalName("House");
 
         return tvShowType;
     }

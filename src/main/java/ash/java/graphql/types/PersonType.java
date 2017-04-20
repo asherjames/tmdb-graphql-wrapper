@@ -15,6 +15,9 @@ public class PersonType extends TmdbObjectType {
     private Double popularity;
 
     @GraphQLField
+    private Integer id;
+
+    @GraphQLField
     @SerializedName("profile_path")
     private String profilePath;
 
@@ -60,5 +63,13 @@ public class PersonType extends TmdbObjectType {
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
