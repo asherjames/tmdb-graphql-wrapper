@@ -23,6 +23,7 @@ public class MultiSearchQueryTest {
 
     private static JsonObject personNameQueryJson;
     private static JsonObject movieTitleQueryJson;
+    private static JsonObject tvShowNameQueryJson;
 
     @BeforeClass
     public static void setupResults() {
@@ -33,24 +34,46 @@ public class MultiSearchQueryTest {
 
         Object movieTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Movie {title}}}");
         movieTitleQueryJson = TestUtil.extractData(movieTitleQueryResultObject);
+
+        Object tvShowTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on TvShow {name}}}");
+        tvShowNameQueryJson = TestUtil.extractData(tvShowTitleQueryResultObject);
     }
 
     @Test
     public void correctValueInPersonNameQuery() {
-        assertThat(getPeople(personNameQueryJson).getAsJsonObject().get("name"))
+        assertThat(getPeople(personNameQueryJson).get("name"))
                 .isEqualTo(new JsonPrimitive("Sigourney Weaver"));
     }
 
     @Test
     public void personNameQueryContainsOnlyPersonResults() {
-        assertThat(getMovies(personNameQueryJson).size()).isEqualTo(0); //Movie results
-        assertThat(getPeople(personNameQueryJson).size()).isEqualTo(1); //Person results
-        assertThat(getTvShows(personNameQueryJson).size()).isEqualTo(0); //TvShow results
+        assertThat(getMovies(personNameQueryJson).size()).isEqualTo(0);
+        assertThat(getPeople(personNameQueryJson).size()).isEqualTo(1);
+        assertThat(getTvShows(personNameQueryJson).size()).isEqualTo(0);
     }
 
     @Test
     public void correctValueInMovieTitleQuery() {
-//        assertThat(movieTitleQueryJson.get(""))
+        assertThat(getMovies(movieTitleQueryJson).get("title")).isEqualTo(new JsonPrimitive("Das Boot"));
+    }
+
+    @Test
+    public void movieTitleQueryContainsOnlyMovieResults() {
+        assertThat(getMovies(movieTitleQueryJson).size()).isEqualTo(1);
+        assertThat(getPeople(movieTitleQueryJson).size()).isEqualTo(0);
+        assertThat(getTvShows(movieTitleQueryJson).size()).isEqualTo(0);
+    }
+
+    @Test
+    public void correctValueInTvShowNameQuery() {
+        assertThat(getTvShows(tvShowNameQueryJson).get("name")).isEqualTo(new JsonPrimitive("House"));
+    }
+
+    @Test
+    public void tvShowNameQueryContainsOnlyTvShowResults() {
+        assertThat(getMovies(tvShowNameQueryJson).size()).isEqualTo(0);
+        assertThat(getPeople(tvShowNameQueryJson).size()).isEqualTo(0);
+        assertThat(getTvShows(tvShowNameQueryJson).size()).isEqualTo(1);
     }
 
     private JsonObject getMovies(JsonObject input) {
