@@ -2,7 +2,10 @@ package ash.java.graphql.types;
 
 import com.google.gson.annotations.SerializedName;
 import graphql.annotations.GraphQLField;
+import graphql.annotations.GraphQLName;
+import graphql.annotations.GraphQLType;
 
+@GraphQLName("Person")
 public class PersonType extends TmdbObjectType {
 
     @GraphQLField

@@ -5,7 +5,6 @@ import ash.java.graphql.types.PersonType;
 import ash.java.graphql.types.TvShowType;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

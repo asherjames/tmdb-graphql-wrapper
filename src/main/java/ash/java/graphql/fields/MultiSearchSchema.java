@@ -44,7 +44,7 @@ public class MultiSearchSchema implements FieldProducer {
             .build();
 
     private GraphQLFieldDefinition multiSearchField = newFieldDefinition()
-            .name("MultiSearch")
+            .name("multiSearch")
             .type(new GraphQLList(multiSearchType))
             .argument(arg -> arg.name("query").type(GraphQLString))
             .dataFetcher(env -> searchDao.searchMultiSearch(env.getArguments()))
