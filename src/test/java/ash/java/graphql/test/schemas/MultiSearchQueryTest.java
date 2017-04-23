@@ -21,21 +21,52 @@ import static org.mockito.Mockito.when;
 
 public class MultiSearchQueryTest {
 
-    private static Object personNameQueryResultObject;
     private static JsonObject personNameQueryJson;
+    private static JsonObject movieTitleQueryJson;
 
     @BeforeClass
     public static void setupResults() {
         TmdbSchema schema = new TmdbSchema(mockFields());
 
-        personNameQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Person {name}}}");
+        Object personNameQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Person {name}}}");
         personNameQueryJson = TestUtil.extractData(personNameQueryResultObject);
+
+        Object movieTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Movie {title}}}");
+        movieTitleQueryJson = TestUtil.extractData(movieTitleQueryResultObject);
     }
 
     @Test
     public void correctValueInPersonNameQuery() {
-        assertThat(personNameQueryJson.get("multiSearch").getAsJsonArray().get(1).getAsJsonObject().get("name"))
+        assertThat(getPeople(personNameQueryJson).getAsJsonObject().get("name"))
                 .isEqualTo(new JsonPrimitive("Sigourney Weaver"));
+    }
+
+    @Test
+    public void personNameQueryContainsOnlyPersonResults() {
+        assertThat(getMovies(personNameQueryJson).size()).isEqualTo(0); //Movie results
+        assertThat(getPeople(personNameQueryJson).size()).isEqualTo(1); //Person results
+        assertThat(getTvShows(personNameQueryJson).size()).isEqualTo(0); //TvShow results
+    }
+
+    @Test
+    public void correctValueInMovieTitleQuery() {
+//        assertThat(movieTitleQueryJson.get(""))
+    }
+
+    private JsonObject getMovies(JsonObject input) {
+        return getResultElement(input, 0);
+    }
+
+    private JsonObject getPeople(JsonObject input) {
+        return getResultElement(input, 1);
+    }
+
+    private JsonObject getTvShows(JsonObject input) {
+        return getResultElement(input, 2);
+    }
+
+    private JsonObject getResultElement(JsonObject input, int type) {
+        return input.get("multiSearch").getAsJsonArray().get(type).getAsJsonObject();
     }
 
     private static List<FieldProducer> mockFields() {

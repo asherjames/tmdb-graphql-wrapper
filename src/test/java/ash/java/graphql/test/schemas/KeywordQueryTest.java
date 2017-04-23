@@ -22,11 +22,7 @@ public class KeywordQueryTest {
 
     private static Object resultObject;
     private static JsonObject resultJson;
-
-    private static Object resultIdObject;
     private static JsonObject resultIdJson;
-
-    private static Object resultNameObject;
     private static JsonObject resultNameJson;
 
     @BeforeClass
@@ -36,10 +32,10 @@ public class KeywordQueryTest {
         resultObject = schema.executeQuery("{keywordList(filmId: 123){id name}}");
         resultJson = TestUtil.extractData(resultObject);
 
-        resultIdObject = schema.executeQuery("{keywordList(filmId: 123){id}}");
+        Object resultIdObject = schema.executeQuery("{keywordList(filmId: 123){id}}");
         resultIdJson = TestUtil.extractData(resultIdObject);
 
-        resultNameObject = schema.executeQuery("{keywordList(filmId: 123){name}}");
+        Object resultNameObject = schema.executeQuery("{keywordList(filmId: 123){name}}");
         resultNameJson = TestUtil.extractData(resultNameObject);
     }
 

@@ -2,9 +2,11 @@ package ash.java.graphql.types;
 
 import com.google.gson.annotations.SerializedName;
 import graphql.annotations.GraphQLField;
+import graphql.annotations.GraphQLName;
 
 import java.util.List;
 
+@GraphQLName("TvShow")
 public class TvShowType extends TmdbObjectType {
 
     @GraphQLField

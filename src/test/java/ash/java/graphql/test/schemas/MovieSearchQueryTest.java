@@ -25,11 +25,7 @@ public class MovieSearchQueryTest {
 
     private static Object posterPathResultObject;
     private static JsonObject posterPathResultJson;
-
-    private static Object multipleFieldsResultObject;
     private static JsonObject multipleFieldsResultJson;
-
-    private static Object nullQueryResultObject;
     private static JsonArray nullQueryResultJson;
 
     @BeforeClass
@@ -39,10 +35,10 @@ public class MovieSearchQueryTest {
         posterPathResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){posterPath}}");
         posterPathResultJson = TestUtil.extractData(posterPathResultObject);
 
-        multipleFieldsResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){releaseDate title popularity voteCount}}");
+        Object multipleFieldsResultObject = schema.executeQuery("{movieSearch(query: \"Das Boot\"){releaseDate title popularity voteCount}}");
         multipleFieldsResultJson = TestUtil.extractData(multipleFieldsResultObject);
 
-        nullQueryResultObject = schema.executeQuery("{movieSearch(year: 1981){releaseDate title popularity voteCount}}");
+        Object nullQueryResultObject = schema.executeQuery("{movieSearch(year: 1981){releaseDate title popularity voteCount}}");
         nullQueryResultJson = TestUtil.extractError(nullQueryResultObject);
     }
 

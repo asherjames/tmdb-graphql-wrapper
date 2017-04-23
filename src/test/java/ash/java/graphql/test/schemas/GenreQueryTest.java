@@ -22,11 +22,7 @@ public class GenreQueryTest {
 
     private static Object resultObjectIdName;
     private static JsonObject resultJsonIdName;
-
-    private static Object resultObjectId;
     private static JsonObject resultJsonId;
-
-    private static Object resultObjectName;
     private static JsonObject resultJsonName;
 
     @BeforeClass
@@ -36,10 +32,10 @@ public class GenreQueryTest {
         resultObjectIdName = schema.executeQuery("{genres{id name}}");
         resultJsonIdName = TestUtil.extractData(resultObjectIdName);
 
-        resultObjectId = schema.executeQuery("{genres{id}}");
+        Object resultObjectId = schema.executeQuery("{genres{id}}");
         resultJsonId = TestUtil.extractData(resultObjectId);
 
-        resultObjectName = schema.executeQuery("{genres{name}}");
+        Object resultObjectName = schema.executeQuery("{genres{name}}");
         resultJsonName = TestUtil.extractData(resultObjectName);
     }
 
