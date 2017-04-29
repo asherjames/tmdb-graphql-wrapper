@@ -25,28 +25,44 @@ public class MultiSearchQueryTest {
     private static JsonObject movieTitleQueryJson;
     private static JsonObject tvShowNameQueryJson;
     private static JsonObject moviePersonQueryJson;
+    private static JsonObject multiTypeQueryJson;
 
     @BeforeClass
     public static void setupResults() {
         TmdbSchema schema = new TmdbSchema(mockFields());
 
-        Object personNameQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Person {name}}}");
+        Object personNameQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\"){"
+                + "... on Person {name}}}");
+
         personNameQueryJson = TestUtil.extractData(personNameQueryResultObject);
 
-        Object movieTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Movie {title}}}");
+        Object movieTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\"){"
+                + "... on Movie{title}}}");
+
         movieTitleQueryJson = TestUtil.extractData(movieTitleQueryResultObject);
 
-        Object tvShowTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on TvShow {name}}}");
+        Object tvShowTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\"){"
+                + "... on TvShow {name}}}");
+
         tvShowNameQueryJson = TestUtil.extractData(tvShowTitleQueryResultObject);
 
-        Object moviePersonQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Person {profilePath} ... on Movie {releaseDate}}}");
+        Object moviePersonQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\"){"
+                + "... on Person {profilePath}"
+                + "... on Movie {releaseDate}}}");
+
         moviePersonQueryJson = TestUtil.extractData(moviePersonQueryResultObject);
+
+        Object multiTypeQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\"){"
+                + "... on Person {id}"
+                + "... on Movie {overview genreIds originalLanguage}"
+                + "... on TvShow{popularity firstAirDate originalName}}}");
+
+        multiTypeQueryJson = TestUtil.extractData(multiTypeQueryResultObject);
     }
 
     @Test
     public void correctValueInPersonNameQuery() {
-        assertThat(getPeople(personNameQueryJson).get("name"))
-                .isEqualTo(new JsonPrimitive("Sigourney Weaver"));
+        assertThat(getPeople(personNameQueryJson).get("name")).isEqualTo(new JsonPrimitive("Sigourney Weaver"));
     }
 
     @Test
@@ -82,7 +98,8 @@ public class MultiSearchQueryTest {
 
     @Test
     public void moviePersonQueryHasCorrectValues() {
-        assertThat(getPeople(moviePersonQueryJson).get("profilePath")).isEqualTo(new JsonPrimitive("/wlg55BTcp3kqfTb3zDtqOFyqhDR.jpg"));
+        assertThat(getPeople(moviePersonQueryJson).get("profilePath")).isEqualTo(new JsonPrimitive
+                ("/wlg55BTcp3kqfTb3zDtqOFyqhDR.jpg"));
         assertThat(getMovies(moviePersonQueryJson).get("releaseDate")).isEqualTo(new JsonPrimitive("1981-09-16"));
     }
 
