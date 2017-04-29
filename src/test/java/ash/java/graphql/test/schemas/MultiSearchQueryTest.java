@@ -24,6 +24,7 @@ public class MultiSearchQueryTest {
     private static JsonObject personNameQueryJson;
     private static JsonObject movieTitleQueryJson;
     private static JsonObject tvShowNameQueryJson;
+    private static JsonObject moviePersonQueryJson;
 
     @BeforeClass
     public static void setupResults() {
@@ -37,6 +38,9 @@ public class MultiSearchQueryTest {
 
         Object tvShowTitleQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on TvShow {name}}}");
         tvShowNameQueryJson = TestUtil.extractData(tvShowTitleQueryResultObject);
+
+        Object moviePersonQueryResultObject = schema.executeQuery("{multiSearch(query: \"query input\") {... on Person {profilePath} ... on Movie {releaseDate}}}");
+        moviePersonQueryJson = TestUtil.extractData(moviePersonQueryResultObject);
     }
 
     @Test
@@ -74,6 +78,19 @@ public class MultiSearchQueryTest {
         assertThat(getMovies(tvShowNameQueryJson).size()).isEqualTo(0);
         assertThat(getPeople(tvShowNameQueryJson).size()).isEqualTo(0);
         assertThat(getTvShows(tvShowNameQueryJson).size()).isEqualTo(1);
+    }
+
+    @Test
+    public void moviePersonQueryHasCorrectValues() {
+        assertThat(getPeople(moviePersonQueryJson).get("profilePath")).isEqualTo(new JsonPrimitive("/wlg55BTcp3kqfTb3zDtqOFyqhDR.jpg"));
+        assertThat(getMovies(moviePersonQueryJson).get("releaseDate")).isEqualTo(new JsonPrimitive("1981-09-16"));
+    }
+
+    @Test
+    public void moviePersonQueryContainsOnlyMovieAndPersonResults() {
+        assertThat(getMovies(moviePersonQueryJson).size()).isEqualTo(1);
+        assertThat(getPeople(moviePersonQueryJson).size()).isEqualTo(1);
+        assertThat(getTvShows(moviePersonQueryJson).size()).isEqualTo(0);
     }
 
     private JsonObject getMovies(JsonObject input) {
