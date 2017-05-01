@@ -5,21 +5,25 @@ import ash.java.graphql.data.SearchDao;
 import ash.java.graphql.fields.FieldProducer;
 import ash.java.graphql.fields.MultiSearchSchema;
 import ash.java.graphql.test.TestUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.reflect.TypeToken;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MultiSearchQueryTest {
+
+    private static Gson gson = new Gson();
 
     private static JsonObject personNameQueryJson;
     private static JsonObject movieTitleQueryJson;
@@ -108,6 +112,29 @@ public class MultiSearchQueryTest {
         assertThat(getMovies(moviePersonQueryJson).size()).isEqualTo(1);
         assertThat(getPeople(moviePersonQueryJson).size()).isEqualTo(1);
         assertThat(getTvShows(moviePersonQueryJson).size()).isEqualTo(0);
+    }
+
+    @Test
+    public void multiTypeQueryContainsCorrectPerson() {
+        assertThat(getPeople(multiTypeQueryJson).get("id")).isEqualTo(new JsonPrimitive(10205));
+    }
+
+    @Test
+    public void multiTypeQueryContainsCorrectMovie() {
+        JsonObject movie = getMovies(multiTypeQueryJson);
+        Type genreListType = new TypeToken<List<Integer>>(){}.getType();
+
+        assertThat(movie.get("overview")).isEqualTo(new JsonPrimitive("A German submarine hunts allied ships..."));
+
+        List<Integer> genreIds = gson.fromJson(movie.get("genreIds"), genreListType);
+        assertThat(genreIds).containsExactlyInAnyOrder(28, 18, 36, 10752, 12);
+
+        assertThat(movie.get("originalLanguage")).isEqualTo(new JsonPrimitive("de"));
+    }
+
+    @Test
+    public void multiTypeQueryContainsCorrectTvShow() {
+
     }
 
     private JsonObject getMovies(JsonObject input) {

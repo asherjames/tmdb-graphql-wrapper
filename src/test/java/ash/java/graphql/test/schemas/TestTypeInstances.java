@@ -16,7 +16,7 @@ public class TestTypeInstances {
         movie.setAdult(false);
         movie.setOverview("A German submarine hunts allied ships...");
         movie.setReleaseDate("1981-09-16");
-        movie.setGenreIds(Stream.of(28, 18, 36, 10752, 12).collect(Collectors.toList()));
+        movie.setGenreIds(Arrays.asList(28, 18, 36, 10752, 12));
         movie.setId(387);
         movie.setOriginalTitle("Das Boot");
         movie.setOriginalLanguage("de");
