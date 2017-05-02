@@ -14,8 +14,6 @@ import org.junit.Test;
 
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -71,9 +69,9 @@ public class MultiSearchQueryTest {
 
     @Test
     public void personNameQueryContainsOnlyPersonResults() {
-        assertThat(getMovies(personNameQueryJson).size()).isEqualTo(0);
-        assertThat(getPeople(personNameQueryJson).size()).isEqualTo(1);
-        assertThat(getTvShows(personNameQueryJson).size()).isEqualTo(0);
+        assertThat(getMovies(personNameQueryJson).entrySet().isEmpty()).isTrue();
+        assertThat(getPeople(personNameQueryJson).entrySet().isEmpty()).isFalse();
+        assertThat(getTvShows(personNameQueryJson).entrySet().isEmpty()).isTrue();
     }
 
     @Test
@@ -83,9 +81,9 @@ public class MultiSearchQueryTest {
 
     @Test
     public void movieTitleQueryContainsOnlyMovieResults() {
-        assertThat(getMovies(movieTitleQueryJson).size()).isEqualTo(1);
-        assertThat(getPeople(movieTitleQueryJson).size()).isEqualTo(0);
-        assertThat(getTvShows(movieTitleQueryJson).size()).isEqualTo(0);
+        assertThat(getMovies(movieTitleQueryJson).entrySet().isEmpty()).isFalse();
+        assertThat(getPeople(movieTitleQueryJson).entrySet().isEmpty()).isTrue();
+        assertThat(getTvShows(movieTitleQueryJson).entrySet().isEmpty()).isTrue();
     }
 
     @Test
@@ -95,9 +93,9 @@ public class MultiSearchQueryTest {
 
     @Test
     public void tvShowNameQueryContainsOnlyTvShowResults() {
-        assertThat(getMovies(tvShowNameQueryJson).size()).isEqualTo(0);
-        assertThat(getPeople(tvShowNameQueryJson).size()).isEqualTo(0);
-        assertThat(getTvShows(tvShowNameQueryJson).size()).isEqualTo(1);
+        assertThat(getMovies(tvShowNameQueryJson).entrySet().isEmpty()).isTrue();
+        assertThat(getPeople(tvShowNameQueryJson).entrySet().isEmpty()).isTrue();
+        assertThat(getTvShows(tvShowNameQueryJson).entrySet().isEmpty()).isFalse();
     }
 
     @Test
@@ -109,9 +107,9 @@ public class MultiSearchQueryTest {
 
     @Test
     public void moviePersonQueryContainsOnlyMovieAndPersonResults() {
-        assertThat(getMovies(moviePersonQueryJson).size()).isEqualTo(1);
-        assertThat(getPeople(moviePersonQueryJson).size()).isEqualTo(1);
-        assertThat(getTvShows(moviePersonQueryJson).size()).isEqualTo(0);
+        assertThat(getMovies(moviePersonQueryJson).entrySet().isEmpty()).isFalse();
+        assertThat(getPeople(moviePersonQueryJson).entrySet().isEmpty()).isFalse();
+        assertThat(getTvShows(moviePersonQueryJson).entrySet().isEmpty()).isTrue();
     }
 
     @Test
@@ -134,7 +132,18 @@ public class MultiSearchQueryTest {
 
     @Test
     public void multiTypeQueryContainsCorrectTvShow() {
+        JsonObject tvShow = getTvShows(multiTypeQueryJson);
 
+        assertThat(tvShow.get("popularity")).isEqualTo(new JsonPrimitive(14.202559));
+        assertThat(tvShow.get("firstAirDate")).isEqualTo(new JsonPrimitive("2004-11-16"));
+        assertThat(tvShow.get("originalName")).isEqualTo(new JsonPrimitive("House"));
+    }
+
+    @Test
+    public void multiTypeQueryContainsOneOfEachType() {
+        assertThat(getMovies(multiTypeQueryJson).entrySet().isEmpty()).isFalse();
+        assertThat(getPeople(multiTypeQueryJson).entrySet().isEmpty()).isFalse();
+        assertThat(getTvShows(multiTypeQueryJson).entrySet().isEmpty()).isFalse();
     }
 
     private JsonObject getMovies(JsonObject input) {
