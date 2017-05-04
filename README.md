@@ -93,14 +93,14 @@ Query -
 ```
 {
     multiSearch(query: "Alien"){
-        ... on Person {id} 
+        ... on Person {name} 
         ... on Movie {overview genreIds originalLanguage}
         ... on TvShow{popularity firstAirDate originalName}
     }
 }            
 ```
 
-URL(percent encoded) - http://localhost:8080/graphql?query=%7BmultiSearch%28query%3A+%22alien%22%29%7B...+on+Person+%7Bid%7D+...+on+Movie+%7Boverview+genreIds+originalLanguage%7D+...+on+TvShow%7Bpopularity+firstAirDate+originalName%7D%7D%7D+
+URL(percent encoded) - http://localhost:8080/graphql?query=%7BmultiSearch%28query%3A+%22alien%22%29%7B...+on+Person+%7Bname%7D+...+on+Movie+%7Boverview+genreIds+originalLanguage%7D+...+on+TvShow%7Bpopularity+firstAirDate+originalName%7D%7D%7D+
 
 Result -
 ```json
