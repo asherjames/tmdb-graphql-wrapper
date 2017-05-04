@@ -20,6 +20,7 @@ import java.util.Map;
 @Service
 public class SearchDaoImpl implements SearchDao {
 
+    private static final String RESULTS = "results";
     private Gson gson = new Gson();
     private JsonParser parser = new JsonParser();
     private Type movieSearchListType = new TypeToken<List<MovieType>>(){}.getType();
@@ -30,7 +31,7 @@ public class SearchDaoImpl implements SearchDao {
         queryMap.put("query", query);
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, queryMap);
 
-        String searchResults = response.getBody().getObject().get("results").toString();
+        String searchResults = response.getBody().getObject().get(RESULTS).toString();
 
         return gson.fromJson(searchResults, movieSearchListType);
     }
@@ -39,7 +40,7 @@ public class SearchDaoImpl implements SearchDao {
     public List<MovieType> searchMoviesWithMultipleParameters(Map<String, Object> params) {
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MOVIE_SEARCH_URL, params);
 
-        String searchResults = response.getBody().getObject().get("results").toString();
+        String searchResults = response.getBody().getObject().get(RESULTS).toString();
 
         return gson.fromJson(searchResults, movieSearchListType);
     }
@@ -49,17 +50,20 @@ public class SearchDaoImpl implements SearchDao {
         List<Object> results = new ArrayList<>();
         HttpResponse<JsonNode> response = TmdbHttpUtils.sendRequest(TmdbUrls.TmdbQueryUrl.MULTI_SEARCH_URL, params);
 
-        JsonArray multiSearchResults = parser.parse(response.getBody().toString()).getAsJsonArray();
+        JsonArray multiSearchResults = parser.parse(response.getBody().toString())
+                .getAsJsonObject()
+                .get(RESULTS)
+                .getAsJsonArray();
 
-        for(JsonElement element : multiSearchResults) {
+        for (JsonElement element : multiSearchResults) {
             JsonObject jsonObject = element.getAsJsonObject();
             String mediaType = jsonObject.get("media_type").getAsString();
 
-            if(mediaType.equals("movie")) {
+            if (mediaType.equals("movie")) {
                 results.add(gson.fromJson(element, MovieType.class));
-            } else if(mediaType.equals("tv")) {
+            } else if (mediaType.equals("tv")) {
                 results.add(gson.fromJson(element, TvShowType.class));
-            } else if(mediaType.equals("person")) {
+            } else if (mediaType.equals("person")) {
                 results.add(gson.fromJson(element, PersonType.class));
             }
         }
