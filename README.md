@@ -1,7 +1,5 @@
 # TMDb GraphQL wrapper [![Build Status](https://travis-ci.org/asherjames/tmdb-graphql-wrapper.svg?branch=master)](https://travis-ci.org/asherjames/tmdb-graphql-wrapper)
 Basic experimentation project looking at how to wrap a RESTful API with a GraphQL proxy.
-  
-So far interprets simple genre and keyword requests:
 
 #### Genre list
 
@@ -86,6 +84,48 @@ Result -
    },
    ...
   ]
+}
+```
+
+#### Multi-search
+
+Query - 
+```
+{
+    multiSearch(query: "Alien"){
+        ... on Person {id} 
+        ... on Movie {overview genreIds originalLanguage}
+        ... on TvShow{popularity firstAirDate originalName}
+    }
+}            
+```
+
+URL(percent encoded) - http://localhost:8080/graphql?query=%7BmultiSearch%28query%3A+%22alien%22%29%7B...+on+Person+%7Bid%7D+...+on+Movie+%7Boverview+genreIds+originalLanguage%7D+...+on+TvShow%7Bpopularity+firstAirDate+originalName%7D%7D%7D+
+
+Result -
+```json
+{
+"multiSearch": [
+      {
+        "name": "Sigourney Weaver"
+      }
+      ...
+      {
+        "overview": "During its return to the earth, commercial spaceship Nostromo intercepts a distress signal from a distant planet. When a three-member team of the crew discovers a chamber containing thousands of eggs on the planet, a creature inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.",
+        "genreIds": [
+          27,
+          28,
+          53,
+          878
+        ],
+        "originalLanguage": "en"
+      }
+      ...
+      {
+        "popularity": 1.921429,
+        "firstAirDate": "2005-01-23",
+        "originalName": "Pet Alien"
+      }
 }
 ```
 
