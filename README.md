@@ -1,7 +1,27 @@
 # TMDb GraphQL wrapper [![Build Status](https://travis-ci.org/asherjames/tmdb-graphql-wrapper.svg?branch=master)](https://travis-ci.org/asherjames/tmdb-graphql-wrapper)
 Basic experimentation project looking at how to wrap a RESTful API with a GraphQL proxy.
 
-#### Genre list
+### Api key
+Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`, or set a `TMDB_API_KEY` environment variable
+
+### Build
+
+`./gradlew build`
+
+
+### Test
+
+`./gradlew test`  
+  
+  
+### Functions
+
+##### [Genre list](#genrelist)
+##### [Film keyword list](#keywordlist)
+##### [Movie search](#moviesearch)
+##### [Multi-search](#multisearch)
+
+#### <a name="genrelist">Genre list</a>
 
 Query - `{genres{name}}`
 
@@ -28,7 +48,7 @@ Result -
 }
 ```
 
-#### List of keywords for film
+#### <a name="keywordlist">List of keywords for film</a>
 
 Query - `{keywordList(filmId: "123") {name}}`
 
@@ -54,7 +74,7 @@ Result -
 }
 ```
 
-#### Search for movies
+#### <a name="moviesearch">Search for movies</a>
 
 Query - `{movieSearch(query: "Das Boot"){release_date title popularity vote_count}}`
 
@@ -87,7 +107,7 @@ Result -
 }
 ```
 
-#### Multi-search
+#### <a name="multisearch">Multi-search</a>
 
 Query - 
 ```
@@ -128,15 +148,3 @@ Result -
       }
 }
 ```
-
-### Api key
-Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`, or set a `TMDB_API_KEY` environment variable
-
-### Build
-
-`./gradlew build`
-
-
-### Test
-
-`./gradlew test`
