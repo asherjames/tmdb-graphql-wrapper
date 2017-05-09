@@ -1,25 +1,28 @@
 # TMDb GraphQL wrapper [![Build Status](https://travis-ci.org/asherjames/tmdb-graphql-wrapper.svg?branch=master)](https://travis-ci.org/asherjames/tmdb-graphql-wrapper)
 Basic experimentation project looking at how to wrap a RESTful API with a GraphQL proxy.
 
-### Api key
+#### Api key
 Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`, or set a `TMDB_API_KEY` environment variable
 
-### Build
+#### Build
 
 `./gradlew build`
 
 
-### Test
+#### Test
 
 `./gradlew test`  
   
-  
-### Functions
+<br/>
+
+#### Functions
 
 ##### [Genre list](#genrelist)
 ##### [Film keyword list](#keywordlist)
 ##### [Movie search](#moviesearch)
 ##### [Multi-search](#multisearch)
+
+<br/>
 
 #### <a name="genrelist">Genre list</a>
 
