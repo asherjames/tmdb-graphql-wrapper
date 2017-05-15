@@ -6,6 +6,7 @@ import ash.java.graphql.fields.FieldProducer;
 import ash.java.graphql.fields.MultiSearchSchema;
 import ash.java.graphql.test.TestUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +29,7 @@ public class MultiSearchQueryTest {
     private static JsonObject tvShowNameQueryJson;
     private static JsonObject moviePersonQueryJson;
     private static JsonObject multiTypeQueryJson;
+    private static JsonArray nullQueryJson;
 
     @BeforeClass
     public static void setupResults() {
@@ -60,6 +62,11 @@ public class MultiSearchQueryTest {
                 + "... on TvShow{popularity firstAirDate originalName}}}");
 
         multiTypeQueryJson = TestUtil.extractData(multiTypeQueryResultObject);
+
+        Object nullQueryResultObject = schema.executeQuery("{multiSearch(page: 1){"
+                + "... on Person {name}}}");
+
+        nullQueryJson = TestUtil.extractError(nullQueryResultObject);
     }
 
     @Test
@@ -144,6 +151,14 @@ public class MultiSearchQueryTest {
         assertThat(getMovies(multiTypeQueryJson).entrySet().isEmpty()).isFalse();
         assertThat(getPeople(multiTypeQueryJson).entrySet().isEmpty()).isFalse();
         assertThat(getTvShows(multiTypeQueryJson).entrySet().isEmpty()).isFalse();
+    }
+
+    @Test
+    public void nullQueryResultsInCorrectError() {
+        assertThat(nullQueryJson).isNotNull();
+        JsonObject errorObject = nullQueryJson.get(0).getAsJsonObject();
+        assertThat(errorObject.get("validationErrorType").getAsString()).isEqualTo("MissingFieldArgument");
+        assertThat(errorObject.get("description").getAsString()).isEqualTo("Missing field argument query");
     }
 
     private JsonObject getMovies(JsonObject input) {

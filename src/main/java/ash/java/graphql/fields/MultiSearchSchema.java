@@ -6,6 +6,7 @@ import ash.java.graphql.types.PersonType;
 import ash.java.graphql.types.TvShowType;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLList;
+import graphql.schema.GraphQLNonNull;
 import graphql.schema.GraphQLUnionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,11 @@ public class MultiSearchSchema implements FieldProducer {
     private GraphQLFieldDefinition multiSearchField = newFieldDefinition()
             .name("multiSearch")
             .type(new GraphQLList(multiSearchType))
-            .argument(arg -> arg.name("query").type(GraphQLString))
+            .argument(arg -> arg.name("query").type(new GraphQLNonNull(GraphQLString)))
+            .argument(arg -> arg.name("language").type(GraphQLString))
+            .argument(arg -> arg.name("page").type(GraphQLInt))
+            .argument(arg -> arg.name("include_adult").type(GraphQLBoolean))
+            .argument(arg -> arg.name("region").type(GraphQLString))
             .dataFetcher(env -> searchDao.searchMultiSearch(env.getArguments()))
             .build();
 
