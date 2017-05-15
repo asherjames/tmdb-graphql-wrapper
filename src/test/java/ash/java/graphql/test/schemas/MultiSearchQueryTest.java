@@ -188,6 +188,10 @@ public class MultiSearchQueryTest {
 
         Map<String, Object> params = new HashMap<>();
         params.put("query", "query input");
+        params.put("language", null);
+        params.put("page", null);
+        params.put("include_adult", null);
+        params.put("region", null);
 
         when(searchDao.searchMultiSearch(params)).thenReturn(results);
 
