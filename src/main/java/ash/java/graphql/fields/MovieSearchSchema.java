@@ -15,7 +15,7 @@ public class MovieSearchSchema implements FieldProducer {
     private SearchDao searchDao;
 
     @Autowired
-    public MovieSearchSchema(final SearchDao searchDao) {
+    public MovieSearchSchema(SearchDao searchDao) {
         this.searchDao = searchDao;
     }
 

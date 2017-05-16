@@ -14,7 +14,7 @@ public class GenreSchema implements FieldProducer {
     private GenreDao genreDao;
 
     @Autowired
-    public GenreSchema(final GenreDao genreDao) {
+    public GenreSchema(GenreDao genreDao) {
         this.genreDao = genreDao;
     }
 
