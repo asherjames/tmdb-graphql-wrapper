@@ -1,8 +1,10 @@
 package ash.java.graphql.data;
 
 public final class TmdbUrls {
+    private static final String BASE_URL = "https://api.themoviedb.org/3";
+
     public enum TmdbUrl {
-        GENRE_LIST_URL("https://api.themoviedb.org/3/genre/movie/list");
+        GENRE_LIST_URL(BASE_URL + "/genre/movie/list");
 
         final String url;
 
@@ -12,22 +14,34 @@ public final class TmdbUrls {
     }
 
     public enum TmdbArgUrl {
-        MOVIE_KEYWORDS_URL("https://api.themoviedb.org/3/movie/", "/keywords");
+        MOVIE_KEYWORDS_URL(BASE_URL + "/movie/", "/keywords");
 
-        final String firstHalf;
-        final String secondHalf;
+        final String base;
+        final String firstPart;
 
-        TmdbArgUrl(String first, String second) {
-            firstHalf = first;
-            secondHalf = second;
+        TmdbArgUrl(String base, String firstPart) {
+            this.base = base;
+            this.firstPart = firstPart;
+        }
+    }
+
+    public enum TmdbTwoArgUrl {
+        TV_SEASON_URL(BASE_URL + "/tv/", "/season/");
+
+        final String base;
+        final String firstPart;
+
+        TmdbTwoArgUrl(String base, String firstPart) {
+            this.base = base;
+            this.firstPart = firstPart;
         }
     }
 
     public enum TmdbQueryUrl {
-        MOVIE_SEARCH_URL("https://api.themoviedb.org/3/search/movie"),
-        MULTI_SEARCH_URL("https://api.themoviedb.org/3/search/multi");
+        MOVIE_SEARCH_URL(BASE_URL + "/search/movie"),
+        MULTI_SEARCH_URL(BASE_URL + "/search/multi");
 
-        String url;
+        final String url;
 
         TmdbQueryUrl(String url) {
             this.url = url;

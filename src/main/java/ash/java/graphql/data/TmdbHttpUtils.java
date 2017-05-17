@@ -23,7 +23,11 @@ public final class TmdbHttpUtils {
     }
 
     public static HttpResponse<JsonNode> sendRequest(TmdbArgUrl tmdbArgUrl, String arg) {
-        return sendTmdbRequest(tmdbArgUrl.firstHalf + arg + tmdbArgUrl.secondHalf);
+        return sendTmdbRequest(tmdbArgUrl.base + arg + tmdbArgUrl.firstPart);
+    }
+
+    public static HttpResponse<JsonNode> sendRequest(TmdbTwoArgUrl tmdbTwoArgUrl, String firstArg, String secondArg) {
+        return sendTmdbRequest(tmdbTwoArgUrl.base + firstArg + tmdbTwoArgUrl.firstPart + secondArg);
     }
 
     public static HttpResponse<JsonNode> sendRequest(TmdbQueryUrl tmdbQueryUrl, Map<String, Object> queryParams) {
