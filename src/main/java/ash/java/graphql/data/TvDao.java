@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface TvDao {
 
-    List<TvSeasonType> getTvSeason(int tvShowId, int seasonNumber);
+    TvSeasonType getTvSeason(int tvShowId, int seasonNumber);
 }
