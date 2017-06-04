@@ -14,9 +14,6 @@ public class TvShowType extends TmdbObjectType {
     private Double popularity;
 
     @GraphQLField
-    private Integer id;
-
-    @GraphQLField
     private String overview;
 
     @GraphQLField
@@ -76,14 +73,6 @@ public class TvShowType extends TmdbObjectType {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getOverview() {

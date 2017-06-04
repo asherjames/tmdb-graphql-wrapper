@@ -24,9 +24,6 @@ public class TvSeasonType extends TmdbObjectType {
     private String overview;
 
     @GraphQLField
-    private Integer id;
-
-    @GraphQLField
     @SerializedName("poster_path")
     private String posterPath;
 
@@ -56,14 +53,6 @@ public class TvSeasonType extends TmdbObjectType {
 
     public void setOverview(String overview) {
         this.overview = overview;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getSeasonNumber() {

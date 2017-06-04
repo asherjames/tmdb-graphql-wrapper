@@ -32,9 +32,6 @@ public class TvEpisodeType extends TmdbObjectType {
     private String overview;
 
     @GraphQLField
-    private Integer id;
-
-    @GraphQLField
     @SerializedName("production_code")
     private String productionCode;
 
@@ -100,14 +97,6 @@ public class TvEpisodeType extends TmdbObjectType {
 
     public void setOverview(String overview) {
         this.overview = overview;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getProductionCode() {

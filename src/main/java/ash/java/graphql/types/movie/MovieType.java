@@ -11,9 +11,6 @@ import java.util.List;
 public class MovieType extends TmdbObjectType {
 
     @GraphQLField
-    private Integer id;
-
-    @GraphQLField
     private String title;
 
     @GraphQLField
@@ -102,14 +99,6 @@ public class MovieType extends TmdbObjectType {
 
     public void setGenreIds(List<Integer> genreId) {
         this.genreIds = genreId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getOriginalTitle() {
