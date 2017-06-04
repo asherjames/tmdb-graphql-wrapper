@@ -1,12 +1,10 @@
 package ash.java.graphql.test.schemas;
 
-import ash.java.graphql.types.MovieType;
-import ash.java.graphql.types.PersonType;
-import ash.java.graphql.types.TvShowType;
+import ash.java.graphql.types.movie.MovieType;
+import ash.java.graphql.types.multisearch.PersonType;
+import ash.java.graphql.types.multisearch.TvShowType;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TestTypeInstances {
 

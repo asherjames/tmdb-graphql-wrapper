@@ -1,5 +1,6 @@
-package ash.java.graphql.types;
+package ash.java.graphql.types.genre;
 
+import ash.java.graphql.types.TmdbObjectType;
 import graphql.annotations.GraphQLField;
 
 public class GenreType extends TmdbObjectType {

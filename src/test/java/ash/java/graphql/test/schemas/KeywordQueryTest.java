@@ -2,7 +2,7 @@ package ash.java.graphql.test.schemas;
 
 import ash.java.graphql.TmdbSchema;
 import ash.java.graphql.data.MovieDao;
-import ash.java.graphql.types.KeywordType;
+import ash.java.graphql.types.keyword.KeywordType;
 import ash.java.graphql.fields.FieldProducer;
 import ash.java.graphql.fields.KeywordSchema;
 import ash.java.graphql.test.TestUtil;

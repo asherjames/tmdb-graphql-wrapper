@@ -1,13 +1,14 @@
-package ash.java.graphql.types;
+package ash.java.graphql.types.tvseason;
 
+import ash.java.graphql.types.TmdbObjectType;
 import com.google.gson.annotations.SerializedName;
 import graphql.annotations.GraphQLField;
 import graphql.annotations.GraphQLName;
 
 import java.util.List;
 
-@GraphQLName("TvSeasonType")
-public class TvSeasonType extends TmdbObjectType {
+@GraphQLName("TvEpisode")
+public class TvEpisodeType extends TmdbObjectType {
 
     @GraphQLField
     @SerializedName("air_date")
@@ -48,6 +49,10 @@ public class TvSeasonType extends TmdbObjectType {
     @GraphQLField
     @SerializedName("vote_average")
     private Double voteAverage;
+
+    @GraphQLField
+    @SerializedName("vote_count")
+    private Integer voteCount;
 
     public String getAirDate() {
         return airDate;
@@ -144,8 +149,4 @@ public class TvSeasonType extends TmdbObjectType {
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
-
-    @GraphQLField
-    @SerializedName("vote_count")
-    private Integer voteCount;
 }

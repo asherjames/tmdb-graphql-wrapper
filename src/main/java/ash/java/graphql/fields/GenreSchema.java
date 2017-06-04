@@ -1,7 +1,7 @@
 package ash.java.graphql.fields;
 
 import ash.java.graphql.data.GenreDao;
-import ash.java.graphql.types.GenreType;
+import ash.java.graphql.types.genre.GenreType;
 import graphql.schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,6 @@
 package ash.java.graphql.data;
 
-import ash.java.graphql.types.TvSeasonType;
-
-import java.util.List;
+import ash.java.graphql.types.tvseason.TvSeasonType;
 
 public interface TvDao {
 

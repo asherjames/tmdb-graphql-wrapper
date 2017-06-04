@@ -1,5 +1,6 @@
-package ash.java.graphql.types;
+package ash.java.graphql.types.multisearch;
 
+import ash.java.graphql.types.TmdbObjectType;
 import com.google.gson.annotations.SerializedName;
 import graphql.annotations.GraphQLField;
 import graphql.annotations.GraphQLName;
