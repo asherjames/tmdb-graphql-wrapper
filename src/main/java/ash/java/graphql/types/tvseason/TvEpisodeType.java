@@ -15,7 +15,7 @@ public class TvEpisodeType extends TmdbObjectType {
     private String airDate;
 
     @GraphQLField
-    private List<?> crew;
+    private List<TvCrewType> crew;
 
     @GraphQLField
     @SerializedName("episode_number")
@@ -23,7 +23,7 @@ public class TvEpisodeType extends TmdbObjectType {
 
     @GraphQLField
     @SerializedName("guest_stars")
-    private List<?> guestStars;
+    private List<TvGuestStarType> guestStars;
 
     @GraphQLField
     private String name;
