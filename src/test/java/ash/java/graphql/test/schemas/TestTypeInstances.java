@@ -1,12 +1,25 @@
 package ash.java.graphql.test.schemas;
 
+import ash.java.graphql.test.TestUtil;
 import ash.java.graphql.types.movie.MovieType;
 import ash.java.graphql.types.multisearch.PersonType;
 import ash.java.graphql.types.multisearch.TvShowType;
+import ash.java.graphql.types.tvseason.TvSeasonType;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class TestTypeInstances {
+
+    private static Gson gson = new Gson();
 
     public static MovieType getMovie() {
         MovieType movie = new MovieType();
@@ -58,5 +71,12 @@ public class TestTypeInstances {
         tvShowType.setOriginalName("House");
 
         return tvShowType;
+    }
+
+    public static TvSeasonType getTvSeason() {
+        Type tvSeasonType = new TypeToken<TvSeasonType>(){}.getType();
+        String jsonString = TestUtil.loadTestResource("house_season_5.json");
+
+        return gson.fromJson(jsonString, tvSeasonType);
     }
 }

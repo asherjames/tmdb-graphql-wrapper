@@ -59,11 +59,11 @@ public class TvEpisodeType extends TmdbObjectType {
         this.airDate = airDate;
     }
 
-    public List<?> getCrew() {
+    public List<TvCrewType> getCrew() {
         return crew;
     }
 
-    public void setCrew(List<?> crew) {
+    public void setCrew(List<TvCrewType> crew) {
         this.crew = crew;
     }
 
@@ -75,11 +75,11 @@ public class TvEpisodeType extends TmdbObjectType {
         this.episodeNumber = episodeNumber;
     }
 
-    public List<?> getGuestStars() {
+    public List<TvGuestStarType> getGuestStars() {
         return guestStars;
     }
 
-    public void setGuestStars(List<?> guestStars) {
+    public void setGuestStars(List<TvGuestStarType> guestStars) {
         this.guestStars = guestStars;
     }
 
