@@ -5,14 +5,16 @@ import ash.java.graphql.data.TvDao;
 import ash.java.graphql.fields.FieldProducer;
 import ash.java.graphql.fields.TvSeasonSearchSchema;
 import ash.java.graphql.test.TestUtil;
+import ash.java.graphql.types.tvseason.TvCrewType;
+import ash.java.graphql.types.tvseason.TvEpisodeType;
 import com.google.gson.*;
-import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -23,7 +25,9 @@ public class TvSeasonSearchSchemaTest {
     private static Gson gson = new Gson();
 
     private static JsonObject seasonIdJson;
-    private static JsonObject episodeAirDateJson;
+    private static JsonObject episodeNameJson;
+    private static JsonObject crewJobJson;
+    private static JsonObject guestNameCrewIdJson;
 
     @BeforeClass
     public static void setupResults() {
@@ -32,8 +36,14 @@ public class TvSeasonSearchSchemaTest {
         Object seasonIdQueryResultObject = schema.executeQuery("{tvSeasonSearch(tvId: 1408, seasonNum: 5){id}}");
         seasonIdJson = TestUtil.extractData(seasonIdQueryResultObject);
 
-        Object episodeAirDateQueryResultObject = schema.executeQuery("{tvSeasonSearch(tvId: 1408, seasonNum: 5){episodes{airDate}}}");
-        episodeAirDateJson = TestUtil.extractData(episodeAirDateQueryResultObject);
+        Object episodeNameQueryResultObject = schema.executeQuery("{tvSeasonSearch(tvId: 1408, seasonNum: 5){episodes{name}}}");
+        episodeNameJson = TestUtil.extractData(episodeNameQueryResultObject);
+
+        Object crewJobQueryResultObject = schema.executeQuery("{tvSeasonSearch(tvId: 1408, seasonNum: 5){episodes{crew{job}}}}");
+        crewJobJson = TestUtil.extractData(crewJobQueryResultObject);
+
+        Object guestNameAndCrewIdQueryResultObject = schema.executeQuery("{tvSeasonSearch(tvId: 1408, seasonNum: 5){episodes{crew{id} guestStars{name}}}}");
+        guestNameCrewIdJson = TestUtil.extractData(guestNameAndCrewIdQueryResultObject);
     }
 
     @Test
@@ -43,11 +53,38 @@ public class TvSeasonSearchSchemaTest {
 
     @Test
     public void episodeAirdatesAreCorrect() {
-        JsonElement datesJson = episodeAirDateJson.getAsJsonObject("tvSeasonSearch").get("episodes");
-        List<AirDateMapping> dates = gson.fromJson(datesJson, new TypeToken<List<AirDateMapping>>(){}.getType());
+        JsonElement datesJson = getResult(episodeNameJson).get("episodes");
+        List<TvEpisodeType> dates = gson.fromJson(datesJson, new TypeToken<List<TvEpisodeType>>(){}.getType());
 
         assertThat(dates).hasSize(24);
-        assertThat(dates.stream().map(m -> m.value)).containsSequence("2008-09-16", "2008-09-23", "2008-09-30", "2008-10-14", "2008-10-21");
+        assertThat(dates.stream().map(TvEpisodeType::getName))
+                .containsSequence("Dying Changes Everything", "Not Cancer", "Adverse Events", "Birthmarks", "Lucky Thirteen");
+    }
+
+    @Test
+    public void crewJobsAreCorrect() {
+        JsonElement episodes = getResult(crewJobJson).get("episodes");
+        List<TvEpisodeType> dates = gson.fromJson(episodes, new TypeToken<List<TvEpisodeType>>(){}.getType());
+
+        List<String> jobs = dates.stream()
+                .flatMap(t -> t.getCrew().stream())
+                .map(TvCrewType::getJob)
+                .collect(Collectors.toList());
+
+        assertThat(jobs).containsSequence("Writer", "Director", "Director", "Writer", "Writer");
+    }
+
+    @Test
+    public void guestNameAndCrewIdAreCorrect() {
+        JsonElement episodes = getResult(guestNameCrewIdJson).get("episodes");
+        List<TvEpisodeType> guestsCrew = gson.fromJson(episodes, new TypeToken<List<TvEpisodeType>>(){}.getType());
+
+        List<Integer> ids = guestsCrew.stream()
+                .flatMap(t -> t.getCrew().stream())
+                .map(TvCrewType::getId)
+                .collect(Collectors.toList());
+
+        assertThat(ids).containsSequence(1219508, 45645, 1215383, 1223963, 169061);
     }
 
     private static JsonObject getResult(JsonObject jsonObject) {
@@ -63,10 +100,5 @@ public class TvSeasonSearchSchemaTest {
         fieldProducers.add(new TvSeasonSearchSchema(tvDao));
 
         return fieldProducers;
-    }
-
-    private class AirDateMapping {
-        @SerializedName("airDate")
-        private String value;
     }
 }
