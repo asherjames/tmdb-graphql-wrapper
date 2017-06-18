@@ -7,7 +7,9 @@ import ash.java.graphql.fields.TvSeasonSearchSchema;
 import ash.java.graphql.test.TestUtil;
 import ash.java.graphql.types.tvseason.TvCrewType;
 import ash.java.graphql.types.tvseason.TvEpisodeType;
+import ash.java.graphql.types.tvseason.TvGuestStarType;
 import com.google.gson.*;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -64,7 +66,7 @@ public class TvSeasonSearchSchemaTest {
     @Test
     public void crewJobsAreCorrect() {
         JsonElement episodes = getResult(crewJobJson).get("episodes");
-        List<TvEpisodeType> dates = gson.fromJson(episodes, new TypeToken<List<TvEpisodeType>>(){}.getType());
+        List<TvEpisodeType_TestClass> dates = gson.fromJson(episodes, new TypeToken<List<TvEpisodeType_TestClass>>(){}.getType());
 
         List<String> jobs = dates.stream()
                 .flatMap(t -> t.getCrew().stream())
@@ -77,7 +79,7 @@ public class TvSeasonSearchSchemaTest {
     @Test
     public void guestNameAndCrewIdAreCorrect() {
         JsonElement episodes = getResult(guestNameCrewIdJson).get("episodes");
-        List<TvEpisodeType> guestsCrew = gson.fromJson(episodes, new TypeToken<List<TvEpisodeType>>(){}.getType());
+        List<TvEpisodeType_TestClass> guestsCrew = gson.fromJson(episodes, new TypeToken<List<TvEpisodeType_TestClass>>(){}.getType());
 
         List<Integer> ids = guestsCrew.stream()
                 .flatMap(t -> t.getCrew().stream())
@@ -85,6 +87,13 @@ public class TvSeasonSearchSchemaTest {
                 .collect(Collectors.toList());
 
         assertThat(ids).containsSequence(1219508, 45645, 1215383, 1223963, 169061);
+
+        List<String> names = guestsCrew.stream()
+                .flatMap(t -> t.getGuestStars_Test().stream())
+                .map(TvGuestStarType::getName)
+                .collect(Collectors.toList());
+
+        assertThat(names).containsSequence("Jamie Rose", "Christine Woods", "Michael Weston", "Tim Conlon", "Felicia Day");
     }
 
     private static JsonObject getResult(JsonObject jsonObject) {
@@ -100,5 +109,19 @@ public class TvSeasonSearchSchemaTest {
         fieldProducers.add(new TvSeasonSearchSchema(tvDao));
 
         return fieldProducers;
+    }
+
+    private class TvEpisodeType_TestClass extends TvEpisodeType {
+
+        @SerializedName("guestStars")
+        private List<TvGuestStarType> guestStarsTest;
+
+        List<TvGuestStarType> getGuestStars_Test() {
+            return guestStarsTest;
+        }
+
+        void setGuestStars_Test(List<TvGuestStarType> guestStars) {
+            this.guestStarsTest = guestStars;
+        }
     }
 }
