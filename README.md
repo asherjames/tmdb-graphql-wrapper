@@ -21,6 +21,7 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 ##### [Film keyword list](#keywordlist)
 ##### [Movie search](#moviesearch)
 ##### [Multi-search](#multisearch)
+##### [Tv Season search](#tvseasonsearch)
 
 <br/>
 
@@ -28,7 +29,7 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 
 Query - `{genres{name}}`
 
-URL (percent encoded) = `http://localhost:8080/graphql?query=%7Bgenres%7Bname%7D%7D`
+URL (percent encoded) - `http://localhost:8080/graphql?query=%7Bgenres%7Bname%7D%7D`
 
 Result - 
 ```json
@@ -149,5 +150,91 @@ Result -
         "firstAirDate": "2005-01-23",
         "originalName": "Pet Alien"
       }
+}
+```
+
+#### <a name="tvseasonsearch">Tv Season search</a>
+
+Query -
+```
+{
+    tvSeasonSearch(tvId: 1408, season: 5) {
+        episodes {
+            overview
+            crew {
+                name
+                job
+            }
+            guestStars {
+                name
+                character
+            }
+        }
+    }    
+}
+```
+
+URL(percent encoded) - http://localhost:8080/graphql?query=%7BtvSeasonSearch%28tvId%3A+1408%2C+seasonNum%3A+5%29+%7Bepisodes+%7Boverview+crew+%7Bname+job%7DguestStars+%7Bname+character%7D%7D%7D%7D
+
+Result - 
+```json
+{
+ "tvSeasonSearch": {
+    "episodes": [
+        {
+            "overview": "In the aftermath of personal tragedy, Wilson resigns from the hospital... and from his friendship with House. Meanwhile, Thirteen struggles with her personal medical problems while helping treat an executive assistant with a similar situation to her own.",
+            "crew": [
+                {
+                    "name": "Eli Attie",
+                    "job": "Writer"
+                },
+                {
+                    "name": "Deran Sarafian",
+                    "job": "Director"
+                }
+            ],
+            "guestStars": [
+                {
+                    "name": "Jamie Rose",
+                    "character": ""
+                },
+                {
+                    "name": "Christine Woods",
+                    "character": ""
+                }
+            ]
+        },
+        {
+            "overview": "The team deals with an organ donor whose organs prove fatal, and the two surviving patients. Meanwhile, House hires a private detective to spy on Wilson, but hears a few things about himself that he'd rather not.",
+            "crew": [
+                {
+                    "name": "David Straiton",
+                    "job": "Director"
+                },
+                {
+                    "name": "Lawrence Kaplow",
+                    "job": "Writer"
+                },
+                {
+                    "name": "David Shore",
+                    "job": "Writer"
+                }
+            ],
+            "guestStars": [
+                {
+                    "name": "Michael Weston",
+                    "character": ""
+                },
+                {
+                    "name": "Tim Conlon",
+                    "character": ""
+                },
+                {
+                    "name": "Felicia Day",
+                    "character": ""
+                }
+            ]
+        },
+        ...
 }
 ```
