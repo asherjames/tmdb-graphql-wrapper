@@ -27,11 +27,11 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 
 #### <a name="genrelist">Genre list</a>
 
-**Query** - `{genres{name}}`
+*Query* - `{genres{name}}`
 
-**URL (percent encoded)** - `http://localhost:8080/graphql?query=%7Bgenres%7Bname%7D%7D`
+*URL (percent encoded)* - `http://localhost:8080/graphql?query=%7Bgenres%7Bname%7D%7D`
 
-**Result** - 
+*Result* - 
 ```json
 {
   "genres": [
@@ -54,11 +54,11 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 
 #### <a name="keywordlist">List of keywords for film</a>
 
-**Query** - `{keywordList(filmId: "123") {name}}`
+*Query* - `{keywordList(filmId: "123") {name}}`
 
-**URL (percent encoded)** - `http://localhost:8080/graphql?query=%7BkeywordList%28filmId%3A%22123%22%29%7Bname%7D%7D`
+*URL (percent encoded)* - `http://localhost:8080/graphql?query=%7BkeywordList%28filmId%3A%22123%22%29%7Bname%7D%7D`
 
-**Result** - 
+*Result* - 
 ```json
 {
   "keywordList": [
@@ -80,11 +80,11 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 
 #### <a name="moviesearch">Search for movies</a>
 
-**Query** - `{movieSearch(query: "Das Boot"){release_date title popularity vote_count}}`
+*Query* - `{movieSearch(query: "Das Boot"){release_date title popularity vote_count}}`
 
-**URL (percent encoded)** - `http://localhost:8080/graphql?query=%7BmovieSearch%28query%3A+%22Das+Boot%22%29%7Brelease_date+title+popularity+vote_count%7D%7D`
+*URL (percent encoded)* - `http://localhost:8080/graphql?query=%7BmovieSearch%28query%3A+%22Das+Boot%22%29%7Brelease_date+title+popularity+vote_count%7D%7D`
 
-**Result** - 
+*Result* - 
 ```json
 {
  "movieSearch": [
@@ -113,7 +113,7 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 
 #### <a name="multisearch">Multi-search</a>
 
-**Query** - 
+*Query* - 
 ```
 {
     multiSearch(query: "Alien"){
@@ -124,9 +124,9 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 }            
 ```
 
-**URL (percent encoded)** - http://localhost:8080/graphql?query=%7BmultiSearch%28query%3A+%22alien%22%29%7B...+on+Person+%7Bname%7D+...+on+Movie+%7Boverview+genreIds+originalLanguage%7D+...+on+TvShow%7Bpopularity+firstAirDate+originalName%7D%7D%7D+
+*URL (percent encoded)* - http://localhost:8080/graphql?query=%7BmultiSearch%28query%3A+%22alien%22%29%7B...+on+Person+%7Bname%7D+...+on+Movie+%7Boverview+genreIds+originalLanguage%7D+...+on+TvShow%7Bpopularity+firstAirDate+originalName%7D%7D%7D+
 
-**Result** -
+*Result* -
 ```json
 {
 "multiSearch": [
@@ -155,7 +155,7 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 
 #### <a name="tvseasonsearch">Tv Season search</a>
 
-**Query** -
+*Query* -
 ```
 {
     tvSeasonSearch(tvId: 1408, seasonNum: 5) {
@@ -174,9 +174,9 @@ Add an `apiKey.properties` file in src/main/resources with an entry for `apikey`
 }
 ```
 
-**URL (percent encoded)** - http://localhost:8080/graphql?query=%7BtvSeasonSearch%28tvId%3A+1408%2C+seasonNum%3A+5%29+%7Bepisodes+%7Boverview+crew+%7Bname+job%7DguestStars+%7Bname+character%7D%7D%7D%7D
+*URL (percent encoded)* - http://localhost:8080/graphql?query=%7BtvSeasonSearch%28tvId%3A+1408%2C+seasonNum%3A+5%29+%7Bepisodes+%7Boverview+crew+%7Bname+job%7DguestStars+%7Bname+character%7D%7D%7D%7D
 
-**Result** - 
+*Result* - 
 ```json
 {
  "tvSeasonSearch": {
